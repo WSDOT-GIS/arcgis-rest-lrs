@@ -5,6 +5,9 @@ dist
 
 !rollup.config.js
 
+src/**/*.js
+src/**/*.js.map
+
 
 .vscode/*
 !.vscode/settings.json
