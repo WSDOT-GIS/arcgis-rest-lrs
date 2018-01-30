@@ -1,9 +1,9 @@
 import { request, IRequestOptions } from "@esri/arcgis-rest-request";
+import { SqlDateFormat, IField, ILayerInfo } from "./common";
 
-export interface ILayerInfo {
-  id: number;
+export interface ILrsInfo {
+  id: string;
   name: string;
-  type: string; // TODO: create custom type with possibility string values.
 }
 
 export interface ILrsVersion {
@@ -21,28 +21,6 @@ export interface ILrsInfo {
   name: string;
   description: string;
   versions?: ILrsVersion[];
-}
-
-export type SqlDateFormat =
-  | "esriLRSDateFormatStandard"
-  | "esriLRSDateFormatFileGDB"
-  | "esriLRSDateFormatOracle";
-
-export interface IFieldDomain {
-  type: string; // e.g., "codedValue",
-  name: string;
-  codedValues: Array<{ name: string; code: string | number }>;
-}
-
-export interface IField {
-  name: string;
-  type: string; // "<fieldType1>",
-  alias: string;
-  length: number;
-  editable: boolean;
-  nullable: boolean;
-  defaultValue: any;
-  domain: IFieldDomain;
 }
 
 export interface IRedlineInfo {
@@ -64,6 +42,16 @@ export interface IRedlineInfo {
   fields: IField[];
 }
 
+export interface IAllLayersResponse {
+  networkLayers: ILayerInfo[];
+  eventLayers: ILayerInfo[];
+  redlineLayers: ILayerInfo[];
+  centerlineLayers: ILayerInfo[];
+  calibrationPointLayers: ILayerInfo[];
+  intersectionLayers: ILayerInfo[];
+  nonLRSLayers: ILayerInfo[];
+}
+
 export interface ILrsServiceInfo {
   currentVersion: number;
   capabilities: string;
@@ -82,7 +70,7 @@ export interface ILrsServerRequestOptions extends IRequestOptions {
   url: string;
 }
 
-function checkUrl(url: string) {
+function isValidLrsServiceUrl(url: string) {
   const re = /^(https?:\/\/.+\/MapServer\/exts\/LRSServer\b)/;
   const match = url.match(re);
   if (match) {
@@ -95,6 +83,6 @@ export function getLrsServiceInfo(
   requestOptions: ILrsServerRequestOptions
 ): Promise<ILrsServiceInfo> {
   let { url } = requestOptions;
-  url = checkUrl(url);
+  url = isValidLrsServiceUrl(url);
   return request(url, requestOptions);
 }

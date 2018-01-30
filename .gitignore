@@ -1,9 +1,6 @@
 # rollup-plugin-typescript2 cache
 .rpt2_cache
 
-*.js
-*.js.map
-*.d.ts
 dist
 
 !rollup.config.js
