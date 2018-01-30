@@ -9,6 +9,22 @@ export type SqlDateFormat =
   | "esriLRSDateFormatFileGDB"
   | "esriLRSDateFormatOracle";
 
+export type esriLocatingStatus =
+  /** Locating was successful. */
+  | "esriLocatingOK"
+  /** Locating was successful, and the input point was located on more than one route. */
+  | "esriLocatingMultipleLocation"
+  /** The route does not exist. */
+  | "esriLocatingCannotFindRoute"
+  /** The route does not have a shape or the shape is empty. */
+  | "esriLocatingRouteShapeEmpty"
+  /** The route does not have measures or the measures are null. */
+  | "esriLocatingRouteMeasuresNull"
+  /** The route is not a M-aware polyline. */
+  | "esriLocatingRouteNotMAware"
+  /** Could not find the route location's shape (the route has no measures or the route location's measures do not exist on the route). */
+  | "esriLocatingCannotFindLocation";
+
 export interface IFieldDomain {
   type: string; // e.g., "codedValue",
   name: string;
