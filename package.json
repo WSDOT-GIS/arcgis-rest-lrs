@@ -38,6 +38,7 @@
     "@esri/arcgis-rest-request": "^1.0.2"
   },
   "dependencies": {
+    "@types/arcgis-rest-api": "^10.4.3",
     "rollup": "^0.55.1",
     "tslib": "^1.9.0"
   },

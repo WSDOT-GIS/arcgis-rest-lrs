@@ -1,3 +1,7 @@
+export function dateToTimeInstant(date: Date) {
+  return date.getTime();
+}
+
 export type MeasureUnits =
   | "esriMeters"
   | "esriFeet"
@@ -9,11 +13,9 @@ export type SqlDateFormat =
   | "esriLRSDateFormatFileGDB"
   | "esriLRSDateFormatOracle";
 
-export type esriLocatingStatus =
+export type esriLocatingStatusCommon =
   /** Locating was successful. */
   | "esriLocatingOK"
-  /** Locating was successful, and the input point was located on more than one route. */
-  | "esriLocatingMultipleLocation"
   /** The route does not exist. */
   | "esriLocatingCannotFindRoute"
   /** The route does not have a shape or the shape is empty. */
@@ -24,6 +26,36 @@ export type esriLocatingStatus =
   | "esriLocatingRouteNotMAware"
   /** Could not find the route location's shape (the route has no measures or the route location's measures do not exist on the route). */
   | "esriLocatingCannotFindLocation";
+
+export type esriLocatingStatusG2M =
+  | esriLocatingStatusCommon
+  /** Locating was successful, and the input point was located on more than one route. */
+  | "esriLocatingMultipleLocation"
+
+export type esriLocatingStatusM2G =
+  | esriLocatingStatusCommon
+  /** Locating was successful. */
+  | "esriLocatingOK"
+  /** The route location's route ID is invalid (null, empty or invalid value). */
+  | "esriLocatingInvalidRouteId"
+  /** At least one of the route location's measure values is invalid. */
+  | "esriLocatingInvalidMeasure"
+  /** The from-measure is equal to the to-measure. */
+  | "esriLocatingNullExtent"
+  /** Could not find the route location's shape, the from-measure and the to-measure are outside of the route measures. */
+  | "esriLocatingCannotFindExtent"
+  /** Could not find the entire route location's shape, the from-measure is outside of the route measure range. */
+  | "esriLocatingFromPartialMatch"
+  /** Could not find the entire route location's shape, the to-measure is outside of the route measure range. */
+  | "esriLocatingToPartialMatch"
+  /** Could not find the entire route location's shape, the from-measure and the to-measure are outside of the route measure range. */
+  | "esriLocatingFromToPartialMatch"
+  /** The route's line ID is invalid (null, empty or invalid value). */
+  | "esriLocatingInvalidLineId"
+  /** The route's line order is invalid (null, empty or invalid value). */
+  | "esriLocatingInvalidLineOrder"
+  /** The from-route and to-route have different line IDs. */
+  | "esriLocatingDifferentLineIds";
 
 export interface IFieldDomain {
   type: string; // e.g., "codedValue",
