@@ -41,3 +41,24 @@ export interface ISpatialReferenceInfo {
   mResolution: number;
   mTolerance: number;
 }
+
+export interface ILocksResponse {
+  lrs: [
+    {
+      id: string;
+      name: string;
+      conflictPreventionEnabled: boolean;
+      allowLockTransfer: boolean;
+      lockRootVersion: string;
+      lockTableFields: {
+        objectIdFieldName: string;
+        networkIdFieldName: string;
+        routeIdFieldName: string;
+        lockUserFieldName: string;
+        lockVersionFieldName: string;
+        lockDateFieldName: string;
+        eventFeatureClassFieldName: string;
+      };
+    }
+  ];
+}
