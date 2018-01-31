@@ -1,4 +1,4 @@
-export const lrsServer = /^(https?:\/\/.+\/MapServer\/exts\/LRSServer\b)/;
+export const lrsServer = /^https?:\/\/.+\/MapServer\/exts\/LRSServer\b/;
 export const allLayers = new RegExp(`${lrsServer.source}/layers\\b`);
 export const applyEdits = new RegExp(`${lrsServer.source}/applyEdits\\b`);
 export const createVersion = new RegExp(`${lrsServer.source}/createVersion\\b`);
