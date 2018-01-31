@@ -107,6 +107,12 @@ export function validateUrl(url: string, re: RegExp) {
   throw new UrlFormatError(url, re);
 }
 
+/**
+ * Validates a URL and then makes a web request using Fetch API.
+ * @param requestOptions Request options.
+ * @param re RegExp used for validating the URL.
+ * @see {@link https://esri.github.io/arcgis-rest-js/api/request/request/|ArcGIS REST JS: request}
+ */
 async function makeValidatedRequest(
   requestOptions: IUrlRequestOptions,
   re: RegExp
@@ -119,6 +125,7 @@ async function makeValidatedRequest(
 /**
  * Gets information about an LRS service
  * @param requestOptions LRS service URL. E.g., https://example.com/MyService/MapServer/exts/LRSServer
+ * @see {@link http://roadsandhighwayssample.esri.com/roads/api/lrsserver.html|Linear Referencing Service}
  */
 export async function getLrsServiceInfo(
   requestOptions: IUrlRequestOptions
@@ -126,12 +133,22 @@ export async function getLrsServiceInfo(
   return makeValidatedRequest(requestOptions, urlRe.lrsServer);
 }
 
+/**
+ * Retrieves information about all layers participating in the LRS servive.
+ * @param requestOptions
+ * @see {@link http://roadsandhighwayssample.esri.com/roads/api/layers.html|All Layers}
+ */
 export async function getAllLayers(
   requestOptions: IUrlRequestOptions
 ): Promise<IAllLayersResponse> {
   return makeValidatedRequest(requestOptions, urlRe.allLayers);
 }
 
+/**
+ * Fetches information about the network layers.
+ * @param requestOptions
+ * @see {@link http://roadsandhighwayssample.esri.com/roads/api/networklayer.html|Network Layer}
+ */
 export async function getNetworkLayers(
   requestOptions: IUrlRequestOptions
 ): Promise<INetworkLayersResponse> {
@@ -144,7 +161,6 @@ export interface IG2MInputLocation {
 }
 
 export interface IG2MOutputLocation {
-  // result(s) for the first point location
   status: esriLocatingStatusG2M;
   results: Array<{
     routeId: string;
@@ -192,19 +208,28 @@ export interface IM2GOptions extends IUrlRequestOptions {
   gdbVersion?: string;
 }
 
-function coordsToLocation(item: IG2MInputLocation | number[]) {
-  if (Array.isArray(item)) {
-    if (item.length < 2) {
+/**
+ * Converts an array of two numbers to an input location object for
+ * use with the REST API. If the input is already in the expected format,
+ * it will be returned as-is.
+ * @param location
+ * @example
+ * const locations = numbers.map(coordsToLocation);
+ * @throws TypeError if the input is an array with less than two elements.
+ */
+function coordsToLocation(location: IG2MInputLocation | number[]) {
+  if (Array.isArray(location)) {
+    if (location.length < 2) {
       throw TypeError("Item must be an array with two or more elements.");
     }
     return {
       geometry: {
-        x: item[0],
-        y: item[1]
+        x: location[0],
+        y: location[1]
       }
     };
   }
-  return item;
+  return location;
 }
 
 export interface IM2GOutput {
@@ -217,6 +242,11 @@ export interface IM2GOutput {
   }>;
 }
 
+/**
+ * Finds route measures closest to the input points.
+ * @param options
+ * @see {@link http://roadsandhighwayssample.esri.com/roads/api/geometrytomeasure.html|Geometry to Measure (Operation)}
+ */
 export async function geometryToMeasure(
   options: IG2MOptions
 ): Promise<IG2MOutput> {
@@ -230,6 +260,11 @@ export async function geometryToMeasure(
   return makeValidatedRequest(options, urlRe.geometryToMeasure);
 }
 
+/**
+ * Returns the geometries for the input route measures.
+ * @param options
+ * @see {@link http://roadsandhighwayssample.esri.com/roads/api/measuretogeometry.html|Measure to Geometry (Operation)}
+ */
 export async function measureToGeometry(
   options: IM2GOptions
 ): Promise<IM2GOutput> {

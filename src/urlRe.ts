@@ -1,3 +1,8 @@
+/**
+ * This module contains regular expressions for validating REST endpoint URLs
+ * for use with the Esri Linear Referencing REST API / Esri Roads and Highways.
+ */
+
 export const lrsServer = /^https?:\/\/.+\/MapServer\/exts\/LRSServer\b/;
 export const allLayers = new RegExp(`${lrsServer.source}/layers\\b`);
 export const applyEdits = new RegExp(`${lrsServer.source}/applyEdits\\b`);
