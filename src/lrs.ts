@@ -118,7 +118,8 @@ async function makeValidatedRequest(
   re: RegExp
 ) {
   let { url } = requestOptions;
-  url = validateUrl(url, urlRe.lrsServer);
+  url = validateUrl(url, re);
+  delete requestOptions.url;
   return request(url, requestOptions);
 }
 
@@ -251,7 +252,7 @@ export async function geometryToMeasure(
   options: IG2MOptions
 ): Promise<IG2MOutput> {
   // make sure double[] are converted to location objects.
-  options.locations = options.locations.map(coordsToLocation);
+  options.locations = JSON.stringify(options.locations.map(coordsToLocation)) as any;
   if (options.temporalViewDate) {
     options.temporalViewDate = dateToTimeInstant(
       options.temporalViewDate

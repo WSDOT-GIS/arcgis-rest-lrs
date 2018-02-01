@@ -1,4 +1,10 @@
-import { getLrsServiceInfo } from "../src/lrs";
+import {
+  getLrsServiceInfo,
+  geometryToMeasure,
+  measureToGeometry,
+  IG2MInputLocation,
+  IG2MOptions
+} from "../src/lrs";
 
 import { LrsInfo } from "./mocks/responses";
 
@@ -6,14 +12,17 @@ import * as fetchMock from "fetch-mock";
 
 import "isomorphic-fetch";
 import "isomorphic-form-data";
+import { request } from "@esri/arcgis-rest-request";
+
+const mapServiceUrl =
+  "http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer";
+const lrsUrl = `${mapServiceUrl}/exts/LRSServer`;
 
 describe("lrs", () => {
   afterEach(fetchMock.restore);
   it("should be able to get LRS service information", async done => {
     fetchMock.once("*", LrsInfo);
 
-    const lrsUrl =
-      "http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer/exts/LRSServer";
     try {
       const response = await getLrsServiceInfo({ url: lrsUrl });
       expect(fetchMock.called()).toEqual(true);
@@ -75,5 +84,48 @@ describe("lrs", () => {
     } catch (ex) {
       done.fail(ex);
     }
+  });
+  it("should be able to locate points", async done => {
+    const g2mUrl = `${lrsUrl}/networkLayers/2/geometryToMeasure`;
+    const locations = [
+      {
+        geometry: {
+          x: -74.08758044242859,
+          y: 40.60800676691363
+        }
+      }
+    ];
+    const inSR = 4326;
+    const tolerance = 50;
+
+    const params = {
+      inSR,
+      locations,
+      tolerance
+    };
+
+    console.log("Input parameters", JSON.stringify(params, undefined, " "));
+
+    try {
+      // const response = await geometryToMeasure(inParams);
+      const response = await request(g2mUrl, {
+        params
+      })
+
+      console.debug("response", response);
+
+      expect(response).toBeTruthy();
+      expect(response.locations).toBeDefined(
+        "locations property should be defined"
+      );
+      expect(Array.isArray(response.locations)).toBe(
+        true,
+        "locations should be an array"
+      );
+    } catch (ex) {
+      done.fail(ex);
+    }
+
+    done();
   });
 });
