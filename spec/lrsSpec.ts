@@ -1,18 +1,14 @@
-import {
-  getLrsServiceInfo,
-  geometryToMeasure,
-  measureToGeometry,
-  IG2MInputLocation,
-  IG2MOptions
-} from "../src/lrs";
+import LrsClient, { getLrsServiceInfo, IM2GOutput, IM2GLocation, IM2GPointLocation, IM2GLineLocation, IG2MOutput } from "../src/lrs";
 
-import { LrsInfo } from "./mocks/responses";
+import { LrsInfo, G2MResponse } from "./mocks/responses";
 
 import * as fetchMock from "fetch-mock";
 
 import "isomorphic-fetch";
 import "isomorphic-form-data";
 import { request } from "@esri/arcgis-rest-request";
+import { ISpatialReferenceInfo } from "../src/common";
+import { SpatialReferenceWkid, Point, Polyline } from "arcgis-rest-api";
 
 const mapServiceUrl =
   "http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer";
@@ -24,7 +20,7 @@ describe("lrs", () => {
     fetchMock.once("*", LrsInfo);
 
     try {
-      const response = await getLrsServiceInfo({ url: lrsUrl });
+      const response = await getLrsServiceInfo({ endpoint: lrsUrl });
       expect(fetchMock.called()).toEqual(true);
       const [url, options]: [string, RequestInit] = fetchMock.lastCall("*");
       const { method, body } = options;
@@ -85,47 +81,82 @@ describe("lrs", () => {
       done.fail(ex);
     }
   });
-  it("should be able to locate points", async done => {
-    const g2mUrl = `${lrsUrl}/networkLayers/2/geometryToMeasure`;
-    const locations = [
-      {
-        geometry: {
-          x: -74.08758044242859,
-          y: 40.60800676691363
-        }
-      }
-    ];
+  it("should be able to locate points from geometry", async done => {
+    fetchMock.once("*", G2MResponse);
+    const locations = [[-74.08758044242859, 40.60800676691363]];
     const inSR = 4326;
     const tolerance = 50;
 
-    const params = {
-      inSR,
-      locations,
-      tolerance
-    };
+    const layerId = 2;
 
-    console.log("Input parameters", JSON.stringify(params, undefined, " "));
-
+    const client = new LrsClient(lrsUrl);
+    let response: IG2MOutput;
     try {
-      // const response = await geometryToMeasure(inParams);
-      const response = await request(g2mUrl, {
-        params
-      })
+      response = await client.geometryToMeasure(layerId, locations, tolerance);
+    } catch (e) {
+      done.fail(e);
+    }
 
-      console.debug("response", response);
-
+    if (response) {
       expect(response).toBeTruthy();
-      expect(response.locations).toBeDefined(
-        "locations property should be defined"
-      );
-      expect(Array.isArray(response.locations)).toBe(
-        true,
-        "locations should be an array"
-      );
+      expect(response.unitsOfMeasure).toMatch(/^esriMiles$/);
+      expect(response.spatialReference).toBeDefined();
+      // expect((response.spatialReference as SpatialReferenceWkid).wkid).toEqual(inSR);
+      expect(response.locations).toBeDefined();
+      expect(response.locations.length).toBeGreaterThan(0);
+
+      for (const loc of response.locations) {
+        expect(loc.status).toMatch(/^esriLocating\w+$/);
+        for (const result of loc.results) {
+          expect(result.routeId).toBeDefined();
+          expect(result.measure).toBeDefined();
+          expect(result.geometryType).toMatch(/^esriGeometryPoint$/);
+          expect(result.geometry).toBeDefined();
+          expect(result.geometry.x).toBeDefined();
+          expect(result.geometry.y).toBeDefined();
+        }
+      }
+    }
+
+    done();
+  });
+  it("should be able to locate points from measures", async done => {
+    const locations: Array<IM2GPointLocation | IM2GLineLocation> = [
+      { routeId: "10023601", measure: 6.5318821878293 },
+      { routeId: "10023601", fromMeasure: 0, toMeasure: 6 }
+    ];
+    const layerId = 2;
+
+    const client = new LrsClient(lrsUrl);
+    try {
+      const response = await client.measureToGeometry(layerId, locations);
+
+      expect(response.locations).toBeDefined();
+      expect(response.spatialReference).toBeDefined();
+      expect(response.locations.length).toEqual(2);
+
+      response.locations.forEach((loc, i) => {
+        const inputLoc = locations[i];
+        expect(loc.routeId).toMatch(inputLoc.routeId, "Input route ID should match output.");
+        if ("fromMeasure" in inputLoc) {
+          expect(loc.geometryType).toMatch("esriGeometryPolyline");
+          const polyline = loc.geometry as Polyline;
+          expect(polyline.paths).toBeDefined();
+        } else if ("measure" in inputLoc) {
+          expect(loc.geometryType).toMatch("esriGeometryPoint");
+          const point = loc.geometry as Point;
+          expect(point.x).toBeDefined();
+          expect(point.y).toBeDefined();
+        } else {
+          fail(`invalid geometry type: ${loc.geometryType}`);
+        }
+      })
     } catch (ex) {
       done.fail(ex);
     }
 
     done();
+
+
   });
 });

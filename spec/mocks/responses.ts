@@ -54,3 +54,27 @@ export const LrsInfo: ILrsServiceInfo = {
     }
   ]
 };
+
+export const G2MResponse = {
+  unitsOfMeasure: "esriMiles",
+  spatialReference: {
+    wkid: 4326
+  },
+  locations: [
+    {
+      status: "esriLocatingOK",
+      results: [
+        {
+          routeId: "10023601",
+          measure: 6.5318821878293,
+          geometryType: "esriGeometryPoint",
+          geometry: {
+            x: -74.087713747166845,
+            y: 40.607818417592,
+            z: 0
+          }
+        }
+      ]
+    }
+  ]
+};

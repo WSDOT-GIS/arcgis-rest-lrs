@@ -11,7 +11,7 @@ import {
 } from "./common";
 import { INetworkLayer } from "./layers";
 import UrlFormatError from "./UrlFormatError";
-import { SpatialReference, Point, Geometry } from "arcgis-rest-api";
+import { SpatialReference, Point, Geometry, Polyline } from "arcgis-rest-api";
 
 export interface ILrsInfo {
   id: string;
@@ -87,9 +87,9 @@ export interface INetworkLayersResponse {
  * and does not have any other parameters (besides f=json,
  * which is handled automatically by {@link request}).
  */
-export interface IUrlRequestOptions extends IRequestOptions {
+export interface IEndpointRequestOptions extends IRequestOptions {
   /** The URL of the request. */
-  url: string;
+  endpoint: string;
 }
 
 /**
@@ -114,13 +114,13 @@ export function validateUrl(url: string, re: RegExp) {
  * @see {@link https://esri.github.io/arcgis-rest-js/api/request/request/|ArcGIS REST JS: request}
  */
 async function makeValidatedRequest(
-  requestOptions: IUrlRequestOptions,
+  requestOptions: IEndpointRequestOptions,
   re: RegExp
 ) {
-  let { url } = requestOptions;
-  url = validateUrl(url, re);
-  delete requestOptions.url;
-  return request(url, requestOptions);
+  let { endpoint } = requestOptions;
+  endpoint = validateUrl(endpoint, re);
+  delete requestOptions.endpoint;
+  return request(endpoint, requestOptions);
 }
 
 /**
@@ -129,7 +129,7 @@ async function makeValidatedRequest(
  * @see {@link http://roadsandhighwayssample.esri.com/roads/api/lrsserver.html|Linear Referencing Service}
  */
 export async function getLrsServiceInfo(
-  requestOptions: IUrlRequestOptions
+  requestOptions: IEndpointRequestOptions
 ): Promise<ILrsServiceInfo> {
   return makeValidatedRequest(requestOptions, urlRe.lrsServer);
 }
@@ -140,7 +140,7 @@ export async function getLrsServiceInfo(
  * @see {@link http://roadsandhighwayssample.esri.com/roads/api/layers.html|All Layers}
  */
 export async function getAllLayers(
-  requestOptions: IUrlRequestOptions
+  requestOptions: IEndpointRequestOptions
 ): Promise<IAllLayersResponse> {
   return makeValidatedRequest(requestOptions, urlRe.allLayers);
 }
@@ -151,7 +151,7 @@ export async function getAllLayers(
  * @see {@link http://roadsandhighwayssample.esri.com/roads/api/networklayer.html|Network Layer}
  */
 export async function getNetworkLayers(
-  requestOptions: IUrlRequestOptions
+  requestOptions: IEndpointRequestOptions
 ): Promise<INetworkLayersResponse> {
   return makeValidatedRequest(requestOptions, urlRe.networkLayers);
 }
@@ -177,7 +177,7 @@ export interface IG2MOutput {
   locations: IG2MOutputLocation[];
 }
 
-export interface IG2MOptions extends IUrlRequestOptions {
+export interface IG2MOptions extends IEndpointRequestOptions {
   locations: Array<IG2MInputLocation | number[]>;
   tolerance?: number;
   temporalViewDate?: Date;
@@ -186,27 +186,37 @@ export interface IG2MOptions extends IUrlRequestOptions {
   gdbVersion?: string;
 }
 
-export interface IG2MLocation {
+export interface IM2GLocation {
   routeId: string;
 }
 
-export interface IG2MPointLocation extends IG2MLocation {
+export interface IM2GPointLocation extends IM2GLocation {
   routeId: string;
   measure: number;
 }
 
-export interface IG2MLineLocation extends IG2MLocation {
+export interface IM2GLineLocation extends IM2GLocation {
   routeId: string;
   toRouteId?: string;
   fromMeasure: number;
   toMeasure: number;
 }
 
-export interface IM2GOptions extends IUrlRequestOptions {
-  locations: IG2MLocation[];
+export interface IM2GOptions extends IEndpointRequestOptions {
+  locations: IM2GLocation[];
   temporalViewDate: Date;
   outSR?: number;
   gdbVersion?: string;
+}
+
+export interface IM2GOutput {
+  spatialReference: SpatialReference,
+  locations: Array<{
+    status: esriLocatingStatusM2G,
+    routeId: string,
+    geometryType: "esriGeometryPoint" | "esriGeometryPolyline"
+    geometry: Point | Polyline
+  }>
 }
 
 /**
@@ -233,46 +243,119 @@ function coordsToLocation(location: IG2MInputLocation | number[]) {
   return location;
 }
 
-export interface IM2GOutput {
-  spatialReference: SpatialReference;
-  locations: Array<{
-    status: esriLocatingStatusM2G;
-    routeId: string;
-    geometryType: "esriGeometryPoint" | "esriGeometryPolyline";
-    geometry: Geometry;
-  }>;
-}
+// export interface IM2GOutput {
+//   unitsOfMeasure: MeasureUnits;
+//   spatialReference: SpatialReference;
+//   locations: Array<{
+//     status: esriLocatingStatusM2G;
+//     results: Array<{
+//       routeId: string;
+//       measure: number;
+//       geometryType: "esriGeometryPoint" | "esriGeometryPolyline";
+//       geometry: Point;
+//     }>;
+//   }>;
+// }
 
 /**
- * Finds route measures closest to the input points.
- * @param options
- * @see {@link http://roadsandhighwayssample.esri.com/roads/api/geometrytomeasure.html|Geometry to Measure (Operation)}
+ * Client for LRS Services.
  */
-export async function geometryToMeasure(
-  options: IG2MOptions
-): Promise<IG2MOutput> {
-  // make sure double[] are converted to location objects.
-  options.locations = JSON.stringify(options.locations.map(coordsToLocation)) as any;
-  if (options.temporalViewDate) {
-    options.temporalViewDate = dateToTimeInstant(
-      options.temporalViewDate
-    ) as any;
+export default class LrsClient {
+  private _url: string;
+  /**
+   * Gets the "url" property.
+   */
+  public get url(): string {
+    return this._url;
   }
-  return makeValidatedRequest(options, urlRe.geometryToMeasure);
-}
+  /**
+   * Sets the "url" property. Input is validated.
+   */
+  public set url(v: string) {
+    v = validateUrl(v, urlRe.lrsServer);
+    this._url = v;
+  }
 
-/**
- * Returns the geometries for the input route measures.
- * @param options
- * @see {@link http://roadsandhighwayssample.esri.com/roads/api/measuretogeometry.html|Measure to Geometry (Operation)}
- */
-export async function measureToGeometry(
-  options: IM2GOptions
-): Promise<IM2GOutput> {
-  if (options.temporalViewDate) {
-    options.temporalViewDate = dateToTimeInstant(
-      options.temporalViewDate
-    ) as any;
+  /**
+   * Creates a new instance of the client class.
+   * @param url The URL of the LRS service.
+   * @example
+   * http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer/exts/LRSServer
+   */
+  constructor(url: string) {
+    this.url = url;
   }
-  return makeValidatedRequest(options, urlRe.measureToGeometry);
+
+  /**
+   * Finds route measures nearest to the input locations.
+   * @param layerId Layer ID integer
+   * @param locations An array of objects or number arrays.
+   * @param tolerance Distance around input locations to search for a route
+   * @param temporalViewDate View date
+   * @param inSR Spatial reference corresponding to locations parameter.
+   * @param outSR Specifies the spatial reference of the output
+   * @param gdbVersion GDB Version
+   */
+  public async geometryToMeasure(
+    layerId: number,
+    locations: Array<IG2MInputLocation | number[]>,
+    tolerance?: number,
+    temporalViewDate?: Date,
+    inSR?: number | SpatialReference,
+    outSR?: number | SpatialReference,
+    gdbVersion?: string
+  ) {
+    const requestUrl = `${this.url}/networkLayers/${layerId}/geometryToMeasure`;
+
+    const params: any = {
+      locations: locations.map(coordsToLocation)
+    };
+
+    if (tolerance !== undefined) {
+      params.tolerance = tolerance;
+    }
+    if (temporalViewDate) {
+      params.temporalViewDate = temporalViewDate.getTime();
+    }
+    if (inSR) {
+      params.inSR = inSR;
+    }
+    if (outSR) {
+      params.outSR = outSR;
+    }
+    if (gdbVersion) {
+      params.gdbVersion = gdbVersion;
+    }
+
+    return (await request(requestUrl, { params })) as IG2MOutput;
+  }
+
+  public async measureToGeometry(
+    layerId: number,
+    locations: Array<IM2GPointLocation | IM2GLineLocation>,
+    temporalViewDate?: Date,
+    outSR?: number | SpatialReference,
+    gdbVersion?: string
+  ) {
+    const requestUrl = `${this.url}/networkLayers/${layerId}/measureToGeometry`;
+
+    const params: any = {
+      layerId,
+      locations
+    };
+
+    if (temporalViewDate) {
+      params.temporalViewDate = temporalViewDate.getTime();
+    }
+
+    if (outSR) {
+      params.outSR = outSR;
+    }
+
+    if (gdbVersion) {
+      params.gdbVersion = gdbVersion;
+    }
+
+    return (await request(requestUrl, {params})) as IM2GOutput;
+  }
 }
