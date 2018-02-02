@@ -7,7 +7,7 @@ import LrsClient, {
   IG2MOutput
 } from "../src/lrs";
 
-import { LrsInfo, G2MResponse } from "./mocks/responses";
+import { LrsInfo, G2MResponse, M2GResponse } from "./mocks/responses";
 
 import * as fetchMock from "fetch-mock";
 
@@ -128,6 +128,7 @@ describe("lrs", () => {
     done();
   });
   it("should be able to locate points from measures", async done => {
+    fetchMock.once("*", M2GResponse);
     const locations: Array<IM2GPointLocation | IM2GLineLocation> = [
       { routeId: "10023601", measure: 6.5318821878293 },
       { routeId: "10023601", fromMeasure: 0, toMeasure: 6 }
