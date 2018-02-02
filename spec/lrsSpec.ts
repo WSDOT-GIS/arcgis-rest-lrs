@@ -1,4 +1,11 @@
-import LrsClient, { getLrsServiceInfo, IM2GOutput, IM2GLocation, IM2GPointLocation, IM2GLineLocation, IG2MOutput } from "../src/lrs";
+import LrsClient, {
+  getLrsServiceInfo,
+  IM2GOutput,
+  IM2GLocation,
+  IM2GPointLocation,
+  IM2GLineLocation,
+  IG2MOutput
+} from "../src/lrs";
 
 import { LrsInfo, G2MResponse } from "./mocks/responses";
 
@@ -137,7 +144,10 @@ describe("lrs", () => {
 
       response.locations.forEach((loc, i) => {
         const inputLoc = locations[i];
-        expect(loc.routeId).toMatch(inputLoc.routeId, "Input route ID should match output.");
+        expect(loc.routeId).toMatch(
+          inputLoc.routeId,
+          "Input route ID should match output."
+        );
         if ("fromMeasure" in inputLoc) {
           expect(loc.geometryType).toMatch("esriGeometryPolyline");
           const polyline = loc.geometry as Polyline;
@@ -150,13 +160,11 @@ describe("lrs", () => {
         } else {
           fail(`invalid geometry type: ${loc.geometryType}`);
         }
-      })
+      });
     } catch (ex) {
       done.fail(ex);
     }
 
     done();
-
-
   });
 });

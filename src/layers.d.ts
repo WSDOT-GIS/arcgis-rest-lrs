@@ -149,13 +149,13 @@ export interface INonLrsLayer extends ILayerBase {
 }
 
 export interface IRedlineLayer extends ILayerBase {
-    type: "esriLRSRedlineLayer";
-    routeIdFieldName: string;
-    routeNameFieldName: string;
-    fromMeasureFieldName: string;
-    toMeasureFieldName: string;
-    effectiveDateFieldName: string;
-    activityTypeFieldName: string;
-    networkFieldName: string;
-    lrs: ILrsInfo;
-  }
+  type: "esriLRSRedlineLayer";
+  routeIdFieldName: string;
+  routeNameFieldName: string;
+  fromMeasureFieldName: string;
+  toMeasureFieldName: string;
+  effectiveDateFieldName: string;
+  activityTypeFieldName: string;
+  networkFieldName: string;
+  lrs: ILrsInfo;
+}

@@ -30,7 +30,7 @@ export type esriLocatingStatusCommon =
 export type esriLocatingStatusG2M =
   | esriLocatingStatusCommon
   /** Locating was successful, and the input point was located on more than one route. */
-  | "esriLocatingMultipleLocation"
+  | "esriLocatingMultipleLocation";
 
 export type esriLocatingStatusM2G =
   | esriLocatingStatusCommon

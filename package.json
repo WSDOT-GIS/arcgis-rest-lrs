@@ -16,6 +16,7 @@
   },
   "scripts": {
     "prepare": "npm run build",
+    "precommit": "prettier --write --parser typescript && tslint",
     "build": "npm run build:node && npm run build:umd && npm run build:esm",
     "build:esm": "tsc -p ./tsconfig.json --module es2015 --outDir ./dist/esm --declaration",
     "build:umd": "rollup -c",

@@ -210,13 +210,13 @@ export interface IM2GOptions extends IEndpointRequestOptions {
 }
 
 export interface IM2GOutput {
-  spatialReference: SpatialReference,
+  spatialReference: SpatialReference;
   locations: Array<{
-    status: esriLocatingStatusM2G,
-    routeId: string,
-    geometryType: "esriGeometryPoint" | "esriGeometryPolyline"
-    geometry: Point | Polyline
-  }>
+    status: esriLocatingStatusM2G;
+    routeId: string;
+    geometryType: "esriGeometryPoint" | "esriGeometryPolyline";
+    geometry: Point | Polyline;
+  }>;
 }
 
 /**
@@ -242,20 +242,6 @@ function coordsToLocation(location: IG2MInputLocation | number[]) {
   }
   return location;
 }
-
-// export interface IM2GOutput {
-//   unitsOfMeasure: MeasureUnits;
-//   spatialReference: SpatialReference;
-//   locations: Array<{
-//     status: esriLocatingStatusM2G;
-//     results: Array<{
-//       routeId: string;
-//       measure: number;
-//       geometryType: "esriGeometryPoint" | "esriGeometryPolyline";
-//       geometry: Point;
-//     }>;
-//   }>;
-// }
 
 /**
  * Client for LRS Services.
@@ -330,6 +316,14 @@ export default class LrsClient {
     return (await request(requestUrl, { params })) as IG2MOutput;
   }
 
+  /**
+   * Returns the geometry for the input measures.
+   * @param layerId Layer identifier integer
+   * @param locations Objects defining measures along a route
+   * @param temporalViewDate View date
+   * @param outSR Spatial reference for the output geometry
+   * @param gdbVersion Geodatabase Version
+   */
   public async measureToGeometry(
     layerId: number,
     locations: Array<IM2GPointLocation | IM2GLineLocation>,
@@ -356,6 +350,6 @@ export default class LrsClient {
       params.gdbVersion = gdbVersion;
     }
 
-    return (await request(requestUrl, {params})) as IM2GOutput;
+    return (await request(requestUrl, { params })) as IM2GOutput;
   }
 }
