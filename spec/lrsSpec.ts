@@ -97,14 +97,8 @@ describe("lrs", () => {
     const layerId = 2;
 
     const client = new LrsClient(lrsUrl);
-    let response: IG2MOutput;
     try {
-      response = await client.geometryToMeasure(layerId, locations, tolerance);
-    } catch (e) {
-      done.fail(e);
-    }
-
-    if (response) {
+      const response = await client.geometryToMeasure(layerId, locations, tolerance);
       expect(response).toBeTruthy();
       expect(response.unitsOfMeasure).toMatch(/^esriMiles$/);
       expect(response.spatialReference).toBeDefined();
@@ -123,6 +117,8 @@ describe("lrs", () => {
           expect(result.geometry.y).toBeDefined();
         }
       }
+    } catch (e) {
+      done.fail(e);
     }
 
     done();

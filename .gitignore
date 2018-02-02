@@ -7,6 +7,12 @@ dist
 
 src/**/*.js
 src/**/*.js.map
+src/**/*.d.ts
+
+spec/**/*.js
+spec/**/*.js.map
+spec/**/*.d.ts
+!spec/helpers/**.js
 
 
 .vscode/*

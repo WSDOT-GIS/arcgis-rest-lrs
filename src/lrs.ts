@@ -254,13 +254,6 @@ export default class LrsClient {
   public get url(): string {
     return this._url;
   }
-  /**
-   * Sets the "url" property. Input is validated.
-   */
-  public set url(v: string) {
-    v = validateUrl(v, urlRe.lrsServer);
-    this._url = v;
-  }
 
   /**
    * Creates a new instance of the client class.
@@ -269,7 +262,7 @@ export default class LrsClient {
    * http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer/exts/LRSServer
    */
   constructor(url: string) {
-    this.url = url;
+    this._url = validateUrl(url, urlRe.lrsServer);
   }
 
   /**
