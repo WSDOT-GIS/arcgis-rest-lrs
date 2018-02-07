@@ -24,7 +24,7 @@ describe("lrs", () => {
   afterEach(fetchMock.restore);
   describe("WSDOT service", () => {
     const mapServiceUrl =
-      "http://data.wsdot.wa.gov/arcgis/rest/services/CountyRoutes/CRAB_Routes/MapServer";
+      "https://data.wsdot.wa.gov/arcgis/rest/services/CountyRoutes/CRAB_Routes/MapServer";
     const lrsUrl = `${mapServiceUrl}/exts/LRSServer`;
     it("should be able to get LRS service information", async done => {
       fetchMock.once("*", wsdotResponses.lrsServiceInfo);
@@ -109,6 +109,7 @@ describe("lrs", () => {
       const measure = 1.4010354979252355;
       const temporalViewDate = new Date(2018, 2, 6);
       it("should be able perform geometry to measure", async done => {
+        fetchMock.once("*", wsdotResponses.g2mResponse)
         const client = new LrsClient(lrsUrl);
         try {
           const response = await client.geometryToMeasure(
@@ -148,6 +149,7 @@ describe("lrs", () => {
       });
 
       it("should be able to perform measure to geometry", async done => {
+        fetchMock.once("*", wsdotResponses.m2gResponse);
         const locations = [{ routeId, fromMeasure: 0, toMeasure: 1 }];
         const client = new LrsClient(lrsUrl);
         const expectedWkid = 2927;

@@ -302,3 +302,54 @@ export const networkLayer = {
     }
   ]
 };
+
+export const g2mResponse = {
+  unitsOfMeasure: "esriMiles",
+  spatialReference: {
+    wkid: 4326
+  },
+  locations: [
+    {
+      status: "esriLocatingOK",
+      results: [
+        {
+          routeId: "5303151600i",
+          measure: 1.4010354979252355,
+          geometryType: "esriGeometryPoint",
+          geometry: {
+            x: -122.76985415453336,
+            y: 47.954735348147381,
+            z: 0
+          }
+        }
+      ]
+    }
+  ]
+};
+
+export const m2gResponse = {
+  spatialReference: {
+    wkid: 2927
+  },
+  locations: [
+    {
+      status: "esriLocatingOK",
+      routeId: "5303151600i",
+      geometryType: "esriGeometryPolyline",
+      geometry: {
+        hasZ: true,
+        hasM: true,
+        paths: [
+          [
+            [1076783.7371534705, 964403.47124364972, 0, -2.7197529561817646e-8],
+            [1078215.3766786456, 964356.06681089103, 0, 0.27104570795199834],
+            [1078578.3349422216, 964361.12618397176, 0, 0.33973200430045836],
+            [1079115.6491563022, 964340.79190705717, 0, 0.44147623830940574],
+            [1080660.1260542274, 964266.83667439222, 0, 0.73405965008714702],
+            [1082065.251486497, 964236.94660814723, 0, 1]
+          ]
+        ]
+      }
+    }
+  ]
+};
