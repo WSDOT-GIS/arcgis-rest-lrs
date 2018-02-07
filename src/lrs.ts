@@ -13,11 +13,7 @@ import { INetworkLayer } from "./layers";
 import UrlFormatError from "./UrlFormatError";
 import { SpatialReference, Point, Geometry, Polyline } from "arcgis-rest-api";
 
-export interface ILrsInfo {
-  id: string;
-  name: string;
-}
-
+/** LRS Version */
 export interface ILrsVersion {
   name: string;
   description: string;
@@ -28,13 +24,15 @@ export interface ILrsVersion {
   parentVersion: string | null;
 }
 
+/** LRS Info */
 export interface ILrsInfo {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   versions?: ILrsVersion[];
 }
 
+/** Redline Info */
 export interface IRedlineInfo {
   featureClassName: string; // the backing feature class name
   isDataVersioned: boolean;
@@ -54,6 +52,7 @@ export interface IRedlineInfo {
   fields: IField[];
 }
 
+/** Response from the All Layers endpoint */
 export interface IAllLayersResponse {
   networkLayers: ILayerInfo[];
   eventLayers: ILayerInfo[];
@@ -64,6 +63,7 @@ export interface IAllLayersResponse {
   nonLRSLayers: ILayerInfo[];
 }
 
+/** Response from the LRSService endpoint */
 export interface ILrsServiceInfo {
   currentVersion: number;
   capabilities: string;
@@ -78,6 +78,7 @@ export interface ILrsServiceInfo {
   redlineInfos?: IRedlineInfo[];
 }
 
+/** Response format of the networkLayers endpoint */
 export interface INetworkLayersResponse {
   networkLayers: INetworkLayer[];
 }
@@ -156,11 +157,17 @@ export async function getNetworkLayers(
   return makeValidatedRequest(requestOptions, urlRe.networkLayers);
 }
 
+/**
+ * Describes an input location with geometry
+ */
 export interface IG2MInputLocation {
   routeId?: string | null;
   geometry: Point;
 }
 
+/**
+ * Output format of locations returned by geometryToMeasure endpoint
+ */
 export interface IG2MOutputLocation {
   status: esriLocatingStatusG2M;
   results: Array<{
@@ -171,12 +178,18 @@ export interface IG2MOutputLocation {
   }>;
 }
 
+/**
+ * Output format returned by geometryToMeasure endpoint
+ */
 export interface IG2MOutput {
   unitsOfMeasure: MeasureUnits;
   spatialReference: SpatialReference;
   locations: IG2MOutputLocation[];
 }
 
+/**
+ * Input parameters for geometryToMeasure operation.
+ */
 export interface IG2MOptions extends IEndpointRequestOptions {
   locations: Array<IG2MInputLocation | number[]>;
   tolerance?: number;
@@ -186,22 +199,28 @@ export interface IG2MOptions extends IEndpointRequestOptions {
   gdbVersion?: string;
 }
 
+/**
+ * Common properties of a location returned by measureToGeometry operation
+ */
 export interface IM2GLocation {
   routeId: string;
 }
 
+/** Point location returned by measureToGeoemtry */
 export interface IM2GPointLocation extends IM2GLocation {
-  routeId: string;
   measure: number;
 }
 
+/** Polyline location returned by measureToGeoemtry */
 export interface IM2GLineLocation extends IM2GLocation {
-  routeId: string;
   toRouteId?: string;
   fromMeasure: number;
   toMeasure: number;
 }
 
+/**
+ * Input parameters for measureToGeometry operation.
+ */
 export interface IM2GOptions extends IEndpointRequestOptions {
   locations: IM2GLocation[];
   temporalViewDate: Date;
@@ -209,7 +228,13 @@ export interface IM2GOptions extends IEndpointRequestOptions {
   gdbVersion?: string;
 }
 
+/**
+ * Output format of response returned from the measureToGeometry operation.
+ */
 export interface IM2GOutput {
+  /**
+   * Spatial reference of the locations' geometry coordinates.
+   */
   spatialReference: SpatialReference;
   locations: Array<{
     status: esriLocatingStatusM2G;

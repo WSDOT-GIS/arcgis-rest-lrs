@@ -7,6 +7,7 @@ import {
 } from "./common";
 import { ILrsInfo } from "./lrs";
 
+/** LRS layer type description */
 export type esriLrsLayerType =
   | "esriLRSCalibrationPointLayer"
   | "esriNonLRSLayer"
@@ -17,6 +18,9 @@ export type esriLrsLayerType =
   | "esriLRSNetworkLayer"
   | "esriLRSRedlineLayer";
 
+/**
+ * Common properties shared between various layer types
+ */
 export interface ILayerBase {
   id: number;
   name: string;
@@ -24,10 +28,13 @@ export interface ILayerBase {
   type: esriLrsLayerType;
   isDataVersioned: boolean;
   versionName: string;
-  dateFormat: SqlDateFormat; //one of: esriLRSDateFormatStandard, esriLRSDateFormatFileGDB, esriLRSDateFormatOracle
+  dateFormat: SqlDateFormat; // one of: esriLRSDateFormatStandard, esriLRSDateFormatFileGDB, esriLRSDateFormatOracle
   fields: IField[];
 }
 
+/**
+ * Calibration point layer
+ */
 export interface ICalibrationPointLayer extends ILayerBase {
   type: "esriLRSCalibrationPointLayer";
   routeIdFieldName: string;
@@ -38,12 +45,14 @@ export interface ICalibrationPointLayer extends ILayerBase {
   lrs: ILrsInfo;
 }
 
+/** Centerline layer */
 export interface ICenterlineLayer extends ILayerBase {
   type: "esriLRSCenterlineLayer";
   centerlineIdFieldName: string;
   lrs: ILrsInfo;
 }
 
+/** Event layer */
 export interface IEventLayer extends ILayerBase {
   type: "esriLRSPointEventLayer" | "esriLRSLinearEventLayer";
   lrsNetworkId: number; // : <networkId>,
@@ -95,6 +104,7 @@ export interface IEventLayer extends ILayerBase {
   parentNetwork: ILayerInfo;
 }
 
+/** Intersection layer */
 export interface IIntersectionLayer extends ILayerBase {
   type: "esriLRSIntersectionLayer";
   datasetName: string; // the intersection class name registered in the LRS dataset
@@ -114,6 +124,7 @@ export interface IIntersectionLayer extends ILayerBase {
   }>;
 }
 
+/** Network layer */
 export interface INetworkLayer extends ILayerBase {
   type: "esriLRSNetworkLayer";
   lrsNetworkId: number;
@@ -143,11 +154,13 @@ export interface INetworkLayer extends ILayerBase {
   intersectionLayers: ILayerInfo[];
 }
 
+/** Non-LRS layer */
 export interface INonLrsLayer extends ILayerBase {
   type: "esriNonLRSLayer";
   featureClassName: string; // the backing feature class name
 }
 
+/** Redline layer */
 export interface IRedlineLayer extends ILayerBase {
   type: "esriLRSRedlineLayer";
   routeIdFieldName: string;
