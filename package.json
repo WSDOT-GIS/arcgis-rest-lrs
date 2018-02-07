@@ -1,12 +1,12 @@
 {
   "name": "@wsdot/arcgis-rest-lrs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Client for Esri Linear Referencing REST API",
-  "main": "dist/node/index.js",
-  "browser": "dist/umd/index.js",
-  "module": "dist/esm/index.js",
-  "js:next": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "main": "dist/node/lrs.js",
+  "browser": "dist/umd/lrs.js",
+  "module": "dist/esm/lrs.js",
+  "js:next": "dist/esm/lrs.js",
+  "types": "dist/esm/lrs.d.ts",
   "files": [
     "dist"
   ],

@@ -6,10 +6,10 @@ import typescript2 from "rollup-plugin-typescript2";
 import uglify from "rollup-plugin-uglify";
 
 export default {
-  input: "src/index.ts",
+  input: "src/lrs.ts",
   output: {
     name: "arcgisLrs",
-    file: "dist/umd/index.js",
+    file: "dist/umd/lrs.js",
     format: "umd",
     sourcemap: true
   },
