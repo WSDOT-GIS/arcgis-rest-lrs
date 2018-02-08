@@ -32,7 +32,6 @@
     "roads",
     "highways"
   ],
-  "private": true,
   "author": "Jeff Jacobson",
   "license": "Unlicense",
   "peerDependencies": {
