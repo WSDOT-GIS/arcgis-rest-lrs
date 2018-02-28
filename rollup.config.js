@@ -10,6 +10,7 @@ export default {
   output: {
     name: "arcgisLrs",
     file: "dist/umd/lrs.js",
+    exports: 'named',
     format: "umd",
     sourcemap: true
   },
