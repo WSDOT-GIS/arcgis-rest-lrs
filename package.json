@@ -35,7 +35,7 @@
   "author": "Jeff Jacobson",
   "license": "Unlicense",
   "peerDependencies": {
-    "@esri/arcgis-rest-request": "^1.0.2"
+    "@esri/arcgis-rest-request": "^1.0.3"
   },
   "dependencies": {
     "@types/arcgis-rest-api": "^10.4.3"
