@@ -12,8 +12,7 @@
     "build:utils": "tsc -p util",
     "copy:leaflet": "node util/copyLeaflet.js",
     "prettier": "prettier \"{src,util,style}/**/*.{ts,less}\" --write",
-    "publish": "npm run build && node util/publish.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "npm run build && node util/publish.js"
   },
   "keywords": [
     "lrs",
