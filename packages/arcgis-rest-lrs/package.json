@@ -1,0 +1,74 @@
+{
+  "name": "@wsdot/arcgis-rest-lrs",
+  "version": "1.0.0-beta.3",
+  "description": "Client for Esri Linear Referencing REST API",
+  "main": "dist/node/lrs.js",
+  "browser": "dist/umd/lrs.js",
+  "module": "dist/esm/lrs.js",
+  "js:next": "dist/esm/lrs.js",
+  "types": "dist/esm/lrs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "directories": {
+    "test": "spec",
+    "lib": "dist"
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "precommit": "prettier --write --parser typescript && tslint",
+    "build": "npm run build:node && npm run build:umd && npm run build:esm",
+    "build:esm": "tsc -p ./tsconfig.json --module es2015 --outDir ./dist/esm --declaration",
+    "build:umd": "rollup -c",
+    "build:node": "tsc -p ./tsconfig.json --module commonjs --outDir ./dist/node",
+    "test": "jasmine"
+  },
+  "keywords": [
+    "arcgis",
+    "esri",
+    "LRS",
+    "linear",
+    "referencing",
+    "roads",
+    "highways"
+  ],
+  "author": "Jeff Jacobson",
+  "license": "Unlicense",
+  "peerDependencies": {
+    "@esri/arcgis-rest-request": "^1.0.3"
+  },
+  "dependencies": {
+    "@types/arcgis-rest-api": "^10.4.3"
+  },
+  "devDependencies": {
+    "@esri/arcgis-rest-request": "^1.0.3",
+    "@types/fetch-mock": "^6.0.0",
+    "@types/jasmine": "^2.8.6",
+    "fetch-mock": "^6.0.1",
+    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-form-data": "^1.0.0",
+    "jasmine": "^3.1.0",
+    "prettier": "1.11.1",
+    "rollup": "^0.56.3",
+    "rollup-plugin-commonjs": "^8.3.0",
+    "rollup-plugin-filesize": "^1.5.0",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.3",
+    "rollup-plugin-typescript2": "^0.11.1",
+    "rollup-plugin-uglify": "^3.0.0",
+    "ts-node": "^5.0.1",
+    "tslib": "^1.9.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.9.0",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "^2.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WSDOT-GIS/arcgis-rest-lrs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WSDOT-GIS/arcgis-rest-lrs/issues"
+  },
+  "homepage": "https://github.com/WSDOT-GIS/arcgis-rest-lrs#readme"
+}

@@ -1,0 +1,61 @@
+{
+  "name": "arcgis-rest-lrs-demo",
+  "version": "1.0.0",
+  "description": "Demo application using ArcGIS REST LRS client",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "npm run build:utils && npm run build:site && npm run copy:leaflet && npm run build:css",
+    "build:css": "lessc style/index.less style/index.css",
+    "build:site": "node util/createDistDir.js && browserify src/index.ts -p [ tsify ] --debug | exorcist dist/index.js.map > dist/index.js",
+    "watch:site": "watchify src/index.ts -p [ tsify ] --debug -o \"exorcist dist/index.js.map > dist/index.js\"",
+    "build:utils": "tsc -p util",
+    "copy:leaflet": "node util/copyLeaflet.js",
+    "prettier": "prettier \"{src,util,style}/**/*.{ts,less}\" --write",
+    "publish": "npm run build && node util/publish.js"
+  },
+  "keywords": [
+    "lrs",
+    "arcgis"
+  ],
+  "private": true,
+  "author": {
+    "name": "Jeff Jacobson",
+    "url": "https://github.com/JeffJacobson"
+  },
+  "license": "Unlicense",
+  "dependencies": {
+    "@esri/arcgis-rest-request": "^1.1.1",
+    "@types/esri-leaflet": "^2.1.2",
+    "@wsdot/arcgis-rest-lrs": "~1.0.0-beta.3",
+    "esri-leaflet": "^2.1.3",
+    "leaflet": "^1.3.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^5.0.1",
+    "@types/geojson": "^7946.0.1",
+    "@types/leaflet": "^1.2.5",
+    "@types/node": "^9.4.6",
+    "browserify": "^16.1.1",
+    "exorcist": "^1.0.1",
+    "fs-extra": "^5.0.0",
+    "gh-pages": "^1.1.0",
+    "less": "^3.0.1",
+    "prettier": "^1.11.1",
+    "tsify": "^3.0.4",
+    "tslib": "^1.9.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.9.0",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "^2.7.2",
+    "watchify": "^3.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WSDOT-GIS/arcgis-rest-lrs-demo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WSDOT-GIS/arcgis-rest-lrs-demo/issues"
+  },
+  "homepage": "https://github.com/WSDOT-GIS/arcgis-rest-lrs-demo#readme"
+}
