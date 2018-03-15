@@ -84,7 +84,7 @@ export function convertLocationToGeoJsonFeature(l: ILocation) {
     default:
       g = null;
   }
-  const feature: GeoJSON.Feature<GeoJSON.GeometryObject | null> = {
+  const feature: GeoJSON.Feature<GeoJSON.GeometryObject> = {
     geometry: g,
     properties,
     type: "Feature"

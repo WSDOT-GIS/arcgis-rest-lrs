@@ -1,5 +1,5 @@
 {
-  "name": "arcgis-rest-lrs-demo",
+  "name": "leaflet-demo",
   "version": "1.0.0",
   "description": "Demo application using ArcGIS REST LRS client",
   "main": "index.js",

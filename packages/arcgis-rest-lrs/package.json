@@ -15,12 +15,9 @@
     "lib": "dist"
   },
   "scripts": {
-    "prepare": "npm run build",
+    "prepare": "webpack && npm run build:esm",
+    "build:esm": "tsc --rootDir src --outDir ./dist/esm -d --module es2015",
     "precommit": "prettier --write --parser typescript && tslint",
-    "build": "npm run build:node && npm run build:umd && npm run build:esm",
-    "build:esm": "tsc -p ./tsconfig.json --module es2015 --outDir ./dist/esm --declaration",
-    "build:umd": "rollup -c",
-    "build:node": "tsc -p ./tsconfig.json --module commonjs --outDir ./dist/node",
     "test": "jasmine"
   },
   "keywords": [
@@ -35,33 +32,29 @@
   "author": "Jeff Jacobson",
   "license": "Unlicense",
   "peerDependencies": {
-    "@esri/arcgis-rest-request": "^1.0.3"
+    "@esri/arcgis-rest-request": "^1.1.1"
   },
   "dependencies": {
-    "@types/arcgis-rest-api": "^10.4.3"
   },
   "devDependencies": {
-    "@esri/arcgis-rest-request": "^1.0.3",
-    "@types/fetch-mock": "^6.0.0",
+    "@esri/arcgis-rest-request": "^1.1.1",
+    "@types/arcgis-rest-api": "^10.4.3",
+    "@types/fetch-mock": "^6.0.1",
     "@types/jasmine": "^2.8.6",
-    "fetch-mock": "^6.0.1",
+    "fetch-mock": "^6.1.0",
     "isomorphic-fetch": "^2.2.1",
     "isomorphic-form-data": "^1.0.0",
     "jasmine": "^3.1.0",
     "prettier": "1.11.1",
-    "rollup": "^0.56.3",
-    "rollup-plugin-commonjs": "^8.3.0",
-    "rollup-plugin-filesize": "^1.5.0",
-    "rollup-plugin-json": "^2.3.0",
-    "rollup-plugin-node-resolve": "^3.0.3",
-    "rollup-plugin-typescript2": "^0.11.1",
-    "rollup-plugin-uglify": "^3.0.0",
+    "source-map": "^0.7.2",
+    "ts-loader": "^4.0.1",
     "ts-node": "^5.0.1",
     "tslib": "^1.9.0",
     "tslint": "^5.9.1",
-    "tslint-config-prettier": "^1.9.0",
-    "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.7.2"
+    "tslint-config-prettier": "^1.10.0",
+    "typescript": "^2.7.2",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12"
   },
   "repository": {
     "type": "git",

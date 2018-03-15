@@ -1,20 +1,3 @@
-# rollup-plugin-typescript2 cache
-.rpt2_cache
-
-dist
-
-!rollup.config.js
-
-src/**/*.js
-src/**/*.js.map
-src/**/*.d.ts
-
-spec/**/*.js
-spec/**/*.js.map
-spec/**/*.d.ts
-!spec/helpers/**.js
-
-
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
