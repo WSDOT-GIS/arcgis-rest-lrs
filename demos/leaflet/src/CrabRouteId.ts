@@ -1,3 +1,13 @@
+/**
+ * This module is used for parsing CRAB route IDs and extracting data such as County FIPS code and direction.
+ */
+
+/**
+ * A regular expression that will match a CRAB route ID with groups for
+ * 1. County FIPS code
+ * 2. Road Number (remaining digits after FIPS code)
+ * 3. Direction (i or d)
+ */
 export const crabRouteIdRe = /^(53\d{3})(\d{5})([a-z])$/;
 
 /**
@@ -31,6 +41,7 @@ export function parseCrabRouteId(routeId: string): IParsedCrabRouteId {
     );
   }
 
+  // Parse the FIPS code and Road number into integers (number type).
   const [countyFipsCode, roadNumber] = match.slice(1, 3).map(parseInt);
 
   const direction = match[3];

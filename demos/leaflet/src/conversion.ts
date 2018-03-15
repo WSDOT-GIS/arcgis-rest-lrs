@@ -23,6 +23,9 @@ export function generateId(baseId: string) {
   return id;
 }
 
+/**
+ * Possible locating status values.
+ */
 export type EsriLocatingStatus =
   | "esriLocatingOK"
   | "esriLocatingCannotFindRoute"
@@ -81,7 +84,7 @@ export function convertLocationToGeoJsonFeature(l: ILocation) {
     default:
       g = null;
   }
-  const feature: GeoJSON.Feature<GeoJSON.GeometryObject> = {
+  const feature: GeoJSON.Feature<GeoJSON.GeometryObject | null> = {
     geometry: g,
     properties,
     type: "Feature"
