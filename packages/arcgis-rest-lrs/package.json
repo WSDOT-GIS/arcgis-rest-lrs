@@ -1,6 +1,6 @@
 {
   "name": "@wsdot/arcgis-rest-lrs",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "Client for Esri Linear Referencing REST API",
   "main": "dist/node/lrs.js",
   "browser": "dist/umd/lrs.js",
