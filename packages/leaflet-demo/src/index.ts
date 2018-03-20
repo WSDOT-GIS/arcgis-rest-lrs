@@ -1,10 +1,13 @@
 import {
-  default as LrsClient,
+  LrsClient,
   IG2MOutputLocation,
   IG2MInputLocation,
   IM2GPointLocation,
   IM2GLineLocation
 } from "@wsdot/arcgis-rest-lrs";
+// // TODO: Fix LrsClient import. Should be coming from @wsdot/arcgis-rest-lrs, but
+// // website fails to load in that situation.
+// import { LrsClient } from '../../arcgis-rest-lrs/dist/esm/lrs';
 import {
   control,
   ControlPosition,
@@ -145,7 +148,7 @@ routeInput.form.addEventListener("route-m-select", async e => {
     .map(convertLocationToGeoJsonFeature);
 
   // Create a new feature collection and add the features to it.
-  const featureCollection: GeoJSON.FeatureCollection<GeometryObject> = {
+  const featureCollection: GeoJSON.FeatureCollection<GeometryObject | null> = {
     features,
     type: "FeatureCollection"
   };

@@ -5,6 +5,7 @@
  */
 
 const path = require("path");
+const DeclarationBundlerPlugin = require("declaration-bundler-webpack-plugin");
 
 /**
  * Creates a configuration
@@ -17,9 +18,11 @@ function makeConfig(libraryTarget) {
     libraryTarget === "commonjs" ? "node" : "umd"
   );
 
+  const library = libraryTarget === "umd" ? "wsdotArcgisRestLrs" : undefined;
+
   return {
     mode: "production",
-    entry: "./src/lrs.ts",
+    entry: "./src/index.ts",
     devtool: "source-map",
     module: {
       rules: [
@@ -35,10 +38,10 @@ function makeConfig(libraryTarget) {
     },
     output: {
       path: outputPath,
-      filename: "lrs.js",
-      library: "wsdotArcgisRestLrs",
-      libraryTarget,
-      libraryExport: "default"
+      filename: "index.js",
+      library,
+      libraryTarget
+      // libraryExport: "default"
     },
     externals: /^@esri\/arcgis-rest/
   };

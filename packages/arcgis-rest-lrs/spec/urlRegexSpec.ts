@@ -51,7 +51,9 @@ describe("urlRe", () => {
     for (const name in urlRe) {
       if (urlRe.hasOwnProperty(name)) {
         if (!urls.hasOwnProperty(name)) {
-          done.fail(`No matching URL for ${name} RegExp (${(urlRe as any)[name]}`);
+          done.fail(
+            `No matching URL for ${name} RegExp (${(urlRe as any)[name]}`
+          );
         }
         const re = (urlRe as any)[name];
         const url = urls[name];

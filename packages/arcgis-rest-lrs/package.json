@@ -1,23 +1,24 @@
 {
   "name": "@wsdot/arcgis-rest-lrs",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "Client for Esri Linear Referencing REST API",
-  "main": "dist/node/lrs.js",
-  "browser": "dist/umd/lrs.js",
-  "module": "dist/esm/lrs.js",
-  "js:next": "dist/esm/lrs.js",
-  "types": "dist/esm/lrs.d.ts",
+  "main": "dist/node/index.js",
+  "browser": "dist/umd/index.js",
+  "module": "dist/esm/index.js",
+  "js:next": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
   "files": [
-    "dist"
+    "dist/**"
   ],
   "directories": {
     "test": "spec",
     "lib": "dist"
   },
   "scripts": {
-    "prepare": "webpack && npm run build:esm",
-    "build:esm": "tsc --rootDir src --outDir ./dist/esm -d --module es2015",
-    "precommit": "prettier --write --parser typescript && tslint",
+    "prepare": "webpack && tsc --rootDir src --outDir ./dist/esm --module es2015",
+    "build:webpack": "webpack",
+    "build:esm": "tsc --rootDir src --outDir ./dist/esm --module es2015",
+    "precommit": "prettier --write **/*.ts",
     "test": "jasmine"
   },
   "keywords": [

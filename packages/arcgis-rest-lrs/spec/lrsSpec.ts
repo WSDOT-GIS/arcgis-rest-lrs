@@ -1,4 +1,5 @@
-import LrsClient, {
+import {
+  LrsClient,
   getLrsServiceInfo,
   IM2GOutput,
   IM2GLocation,
@@ -109,7 +110,7 @@ describe("lrs", () => {
       const measure = 1.4010354979252355;
       const temporalViewDate = new Date(2018, 2, 6);
       it("should be able perform geometry to measure", async done => {
-        fetchMock.once("*", wsdotResponses.g2mResponse)
+        fetchMock.once("*", wsdotResponses.g2mResponse);
         const client = new LrsClient(lrsUrl);
         try {
           const response = await client.geometryToMeasure(
