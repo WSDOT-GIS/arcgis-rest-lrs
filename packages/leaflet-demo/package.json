@@ -1,6 +1,6 @@
 {
   "name": "leaflet-demo",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0-rc.1",
   "description": "Demo application using ArcGIS REST LRS client",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "@types/geojson": "^7946.0.2",
     "@types/leaflet": "^1.2.6",
     "@types/node": "^9.4.7",
-    "@wsdot/arcgis-rest-lrs": "^1.0.0-rc.0",
+    "@wsdot/arcgis-rest-lrs": "^1.0.0-rc.1",
     "esri-leaflet": "^2.1.4",
     "fs-extra": "^5.0.0",
     "gh-pages": "^1.1.0",
