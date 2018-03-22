@@ -1,6 +1,6 @@
 {
   "name": "leaflet-demo",
-  "version": "1.0.0",
+  "version": "1.0.0-rc.0",
   "description": "Demo application using ArcGIS REST LRS client",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "build:utils": "tsc -p util",
     "copy:leaflet": "node util/copyLeaflet.js",
     "prettier": "prettier \"{src,util,style}/**/*.{ts,less}\" --write",
-    "publish": "npm run build && node util/publish.js"
+    "gh-pages": "npm run build && node util/publish.js"
   },
   "keywords": [
     "lrs",
@@ -24,23 +24,22 @@
     "url": "https://github.com/JeffJacobson"
   },
   "license": "Unlicense",
-  "dependencies": {},
   "devDependencies": {
     "@esri/arcgis-rest-request": "^1.1.1",
-    "@types/esri-leaflet": "^2.1.2",
-    "@wsdot/arcgis-rest-lrs": "~1.0.0-beta.4",
-    "esri-leaflet": "^2.1.4",
-    "leaflet": "^1.3.1",
-    "source-map": "^0.7.2",
     "@types/arcgis-rest-api": "^10.4.3",
+    "@types/esri-leaflet": "^2.1.2",
     "@types/fs-extra": "^5.0.1",
     "@types/geojson": "^7946.0.2",
     "@types/leaflet": "^1.2.6",
     "@types/node": "^9.4.7",
+    "@wsdot/arcgis-rest-lrs": "^1.0.0-rc.0",
+    "esri-leaflet": "^2.1.4",
     "fs-extra": "^5.0.0",
     "gh-pages": "^1.1.0",
+    "leaflet": "^1.3.1",
     "less": "^3.0.1",
     "prettier": "^1.11.1",
+    "source-map": "^0.7.2",
     "ts-loader": "^4.1.0",
     "tslib": "^1.9.0",
     "tslint": "^5.9.1",
