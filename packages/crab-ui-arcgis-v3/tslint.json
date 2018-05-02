@@ -1,0 +1,5 @@
+{
+    "extends": [
+        "../arcgis-rest-lrs/tslint.json"
+    ],
+}

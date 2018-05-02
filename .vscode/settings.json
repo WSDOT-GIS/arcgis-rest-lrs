@@ -1,7 +1,7 @@
 {
     "files.exclude": {
         "**/.rpt2_cache": true,
-        "**/*.js": { "when": "$(basename).ts" },
+        // "**/*.js": { "when": "$(basename).ts" },
         "**/.git": true,
         "**/.svn": true,
         "**/.hg": true,

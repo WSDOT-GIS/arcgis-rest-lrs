@@ -1,0 +1,13 @@
+{
+  "name": "@wsdot/crab-ui-arcgis-v3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "@wsdot/crab": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/arcgis-js-api": "^3 <4"
+  }
+}
