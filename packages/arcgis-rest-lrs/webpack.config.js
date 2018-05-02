@@ -5,7 +5,6 @@
  */
 
 const path = require("path");
-const DeclarationBundlerPlugin = require("declaration-bundler-webpack-plugin");
 
 /**
  * Creates a configuration

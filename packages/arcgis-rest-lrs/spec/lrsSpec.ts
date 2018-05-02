@@ -11,8 +11,7 @@ import {
 import { LrsInfo, G2MResponse, M2GResponse } from "./mocks/responses";
 import * as wsdotResponses from "./mocks/wsdot/responses";
 
-import * as fetchMock from "fetch-mock";
-
+import fetchMock from "fetch-mock";
 import "isomorphic-fetch";
 import "isomorphic-form-data";
 import { request } from "@esri/arcgis-rest-request";
@@ -48,7 +47,7 @@ describe("lrs", () => {
           expect(lrs.id).toMatch(guidRe);
           expect(lrs.name).toBeTruthy();
           expect(lrs.description).toBeDefined();
-          for (const v of lrs.versions) {
+          for (const v of lrs.versions!) {
             expect(v.name).toBeTruthy();
             expect(v.description).toBeDefined();
             expect(v.access).toMatch(/^esriVersionAccess\w+$/);
@@ -58,7 +57,7 @@ describe("lrs", () => {
 
         const fieldNameRe = /^[\w\.\(\)]+$/;
         // Check Redline Infos for expected properties.
-        for (const rli of svcInfo.redlineInfos) {
+        for (const rli of svcInfo.redlineInfos!) {
           expect(rli.featureClassName).toMatch(/\w+\.\w+\.\w+/);
           expect(typeof rli.isDataVersioned).toMatch("boolean");
           expect(rli.versionName).toBeDefined();
@@ -199,7 +198,7 @@ describe("lrs", () => {
       try {
         const response = await getLrsServiceInfo({ endpoint: lrsUrl });
         expect(fetchMock.called()).toEqual(true);
-        const [url, options]: [string, RequestInit] = fetchMock.lastCall("*");
+        const [url, options]: [string, any] = fetchMock.lastCall("*");
         const { method, body } = options;
         expect(method).toBe("POST");
         expect(body).toContain("f=json");

@@ -4,6 +4,8 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+packages/*/dest
+
 # Windows thumbnail cache files
 Thumbs.db
 ehthumbs.db
