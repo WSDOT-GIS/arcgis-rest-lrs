@@ -36,26 +36,26 @@
     "tslib": "^1.9.0"
   },
   "peerDependencies": {
-    "@esri/arcgis-rest-request": "^1.1.1"
+    "@esri/arcgis-rest-request": "^1.13.2"
   },
   "devDependencies": {
-    "@esri/arcgis-rest-request": "^1.1.1",
+    "@esri/arcgis-rest-request": "^1.13.2",
     "@types/arcgis-rest-api": "^10.4.3",
-    "@types/fetch-mock": "^6.0.1",
-    "@types/jasmine": "^2.8.6",
-    "fetch-mock": "^6.3.0",
+    "@types/fetch-mock": "^6.0.4",
+    "@types/jasmine": "^2.8.11",
+    "fetch-mock": "^7.2.5",
     "isomorphic-fetch": "^2.2.1",
-    "isomorphic-form-data": "^1.0.0",
-    "jasmine": "^3.1.0",
-    "prettier": "1.12.1",
-    "source-map": "^0.7.2",
-    "ts-loader": "^4.2.0",
-    "ts-node": "^6.0.2",
-    "tslint": "^5.9.1",
-    "tslint-config-prettier": "^1.12.0",
-    "typescript": "^2.8.3",
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.1.2"
+    "isomorphic-form-data": "^2.0.0",
+    "jasmine": "^3.3.0",
+    "prettier": "1.15.1",
+    "source-map": "^0.7.3",
+    "ts-loader": "^5.3.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.1.6",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
   },
   "repository": {
     "type": "git",
