@@ -1,3 +1,5 @@
+/// <reference types="jasmine" />
+
 import {
   LrsClient,
   getLrsServiceInfo,
@@ -11,7 +13,7 @@ import {
 import { LrsInfo, G2MResponse, M2GResponse } from "./mocks/responses";
 import * as wsdotResponses from "./mocks/wsdot/responses";
 
-import fetchMock from "fetch-mock";
+// import fetchMock from "fetch-mock";
 import "isomorphic-fetch";
 import "isomorphic-form-data";
 import { request } from "@esri/arcgis-rest-request";
@@ -21,13 +23,13 @@ import { SpatialReferenceWkid, Point, Polyline } from "arcgis-rest-api";
 const guidRe = /[a-f\d\-]+/i;
 
 describe("lrs", () => {
-  afterEach(fetchMock.restore);
+  // afterEach(fetchMock.restore);
   describe("WSDOT service", () => {
     const mapServiceUrl =
       "https://data.wsdot.wa.gov/arcgis/rest/services/CountyRoutes/CRAB_Routes/MapServer";
     const lrsUrl = `${mapServiceUrl}/exts/LRSServer`;
     it("should be able to get LRS service information", async done => {
-      fetchMock.once("*", wsdotResponses.lrsServiceInfo);
+      // fetchMock.once("*", wsdotResponses.lrsServiceInfo);
       try {
         const svcInfo = await getLrsServiceInfo({ endpoint: lrsUrl });
         expect(svcInfo.currentVersion).toBeGreaterThanOrEqual(10.51);
@@ -109,7 +111,7 @@ describe("lrs", () => {
       const measure = 1.4010354979252355;
       const temporalViewDate = new Date(2018, 2, 6);
       it("should be able perform geometry to measure", async done => {
-        fetchMock.once("*", wsdotResponses.g2mResponse);
+        // fetchMock.once("*", wsdotResponses.g2mResponse);
         const client = new LrsClient(lrsUrl);
         try {
           const response = await client.geometryToMeasure(
@@ -149,7 +151,7 @@ describe("lrs", () => {
       });
 
       it("should be able to perform measure to geometry", async done => {
-        fetchMock.once("*", wsdotResponses.m2gResponse);
+        // fetchMock.once("*", wsdotResponses.m2gResponse);
         const locations = [{ routeId, fromMeasure: 0, toMeasure: 1 }];
         const client = new LrsClient(lrsUrl);
         const expectedWkid = 2927;
@@ -191,17 +193,17 @@ describe("lrs", () => {
     const mapServiceUrl =
       "http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer";
     const lrsUrl = `${mapServiceUrl}/exts/LRSServer`;
-    afterEach(fetchMock.restore);
+    // afterEach(fetchMock.restore);
     it("should be able to get LRS service information", async done => {
-      fetchMock.once("*", LrsInfo);
+      // fetchMock.once("*", LrsInfo);
 
       try {
         const response = await getLrsServiceInfo({ endpoint: lrsUrl });
-        expect(fetchMock.called()).toEqual(true);
-        const [url, options]: [string, any] = fetchMock.lastCall("*");
-        const { method, body } = options;
-        expect(method).toBe("POST");
-        expect(body).toContain("f=json");
+        // expect(fetchMock.called()).toEqual(true);
+        // const [url, options]: [string, any] = fetchMock.lastCall("*");
+        // const { method, body } = options;
+        // expect(method).toBe("POST");
+        // expect(body).toContain("f=json");
         expect(response.currentVersion).toBeGreaterThanOrEqual(10.4);
         expect(response.capabilities).toBeDefined();
         const {
@@ -258,7 +260,7 @@ describe("lrs", () => {
       }
     });
     it("should be able to locate points from geometry", async done => {
-      fetchMock.once("*", G2MResponse);
+      // fetchMock.once("*", G2MResponse);
       const locations = [[-74.08758044242859, 40.60800676691363]];
       const inSR = 4326;
       const tolerance = 50;
@@ -297,7 +299,7 @@ describe("lrs", () => {
       done();
     });
     it("should be able to locate points from measures", async done => {
-      fetchMock.once("*", M2GResponse);
+      // fetchMock.once("*", M2GResponse);
       const locations: Array<IM2GPointLocation | IM2GLineLocation> = [
         { routeId: "10023601", measure: 6.5318821878293 },
         { routeId: "10023601", fromMeasure: 0, toMeasure: 6 }
