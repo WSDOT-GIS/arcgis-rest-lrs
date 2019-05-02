@@ -6,7 +6,7 @@ ghpages.publish(
   {
     src: ["*.{html,ico}", "{dist,leaflet,style,src}/**/*"]
   },
-  (error: Error) => {
+  (error) => {
     if (error) {
       console.error(error);
     }
