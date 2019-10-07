@@ -1,10 +1,9 @@
 {
 	"scripts": {
-		"prepare": "lerna bootstrap --hoist",
 		"test": "lerna run test"
 	},
 	"devDependencies": {
-		"lerna": "^3.14.1"
+		"lerna": "^3.16.4"
 	},
 	"private": true,
 	"workspaces": [
