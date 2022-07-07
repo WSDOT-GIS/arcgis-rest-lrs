@@ -126,7 +126,7 @@ async function makeValidatedRequest(
 
 /**
  * Gets information about an LRS service
- * @param requestOptions LRS service URL. E.g., https://example.com/MyService/MapServer/exts/LRSServer
+ * @param requestOptions LRS service URL. E.g., https://example.com/MyService/MapServer/exts/LRServer
  * @see {@link http://roadsandhighwayssample.esri.com/roads/api/lrsserver.html|Linear Referencing Service}
  */
 export async function getLrsServiceInfo(
@@ -285,7 +285,7 @@ export class LrsClient {
    * Creates a new instance of the client class.
    * @param url The URL of the LRS service.
    * @example
-   * http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer/exts/LRSServer
+   * http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer/exts/LRServer
    */
   constructor(url: string) {
     this._url = validateUrl(url, urlRe.lrsServer);

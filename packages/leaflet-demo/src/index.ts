@@ -37,7 +37,7 @@ import GeometryToMeasureSettings from "./GeometryToMeasureSettings";
 
 const mapServiceUrl =
   "https://data.wsdot.wa.gov/arcgis/rest/services/CountyRoutes/CRAB_Routes/MapServer";
-const lrsUrl = `${mapServiceUrl}/exts/LRSServer`;
+const lrsUrl = `${mapServiceUrl}/exts/LRServer`;
 const layerId = 0;
 const client = new LrsClient(lrsUrl);
 const routeLayerMinZoom = 15;
