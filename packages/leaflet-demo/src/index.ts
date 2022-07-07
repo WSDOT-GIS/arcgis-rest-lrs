@@ -1,7 +1,6 @@
 import {
   LrsClient,
   IG2MOutputLocation,
-  IG2MInputLocation,
   IM2GPointLocation,
   IM2GLineLocation
 } from "@wsdot/arcgis-rest-lrs";
@@ -12,7 +11,6 @@ import {
   control,
   ControlPosition,
   DivIcon,
-  featureGroup as createFeatureGroup,
   GeoJSON as GeoJsonLayer,
   LeafletMouseEvent,
   map as createMap,
@@ -20,12 +18,10 @@ import {
   tileLayer
 } from "leaflet";
 
-import GeoJsonExport from "./GeoJsonExport";
 import GitHubLink from "./GitHubLink";
 
-const esriLeaflet = require("esri-leaflet");
+import esriLeaflet from "esri-leaflet";
 
-import { Point, Polyline } from "arcgis-rest-api";
 import GeoJSON, { GeometryObject, GeoJsonObject } from "geojson";
 import {
   convertLocationToGeoJsonFeature,
@@ -67,25 +63,24 @@ const countyRoutesLayer = new esriLeaflet.DynamicMapLayer({
 });
 countyRoutesLayer.addTo(theMap);
 
-interface ICrabPoint
-  extends GeoJSON.Feature<
+type ICrabPoint = GeoJSON.Feature<
       GeoJSON.Point,
       {
         routeId: string;
         measure: number;
       }
-    > {}
+    >;
 
 // Create a new GeoJSON layer and add the feature collection, then add it to the map.
 const geoJsonLayer = new GeoJsonLayer(
-  { type: "FeatureCollection", features: [] } as any,
+  { type: "FeatureCollection", features: [] } as GeoJSON.GeoJsonObject,
   {
     pointToLayer: (geoJsonPoint: ICrabPoint, latLng) => {
       const formatter = new Intl.NumberFormat("en-US", {
         maximumFractionDigits: 2
       });
       if (geoJsonPoint.properties) {
-        const { routeId, measure } = geoJsonPoint.properties;
+        const { measure } = geoJsonPoint.properties;
         const icon = new DivIcon({
           className: "mp-icon",
           iconSize: [26, 18],
@@ -157,7 +152,7 @@ routeInput.form.addEventListener("route-m-select", async e => {
 
 /**
  * Separates the words that make up an esriLocating... status string
- * and returns a string containing the words separated by spaces (exluding
+ * and returns a string containing the words separated by spaces (excluding
  * the leading esriLocating portion).
  * If the input string is not in the exected format, the function simple returns the original,
  * unmodified input string.
@@ -186,14 +181,12 @@ theMap.on("click", async event => {
     4326,
     4326
   );
-  const { locations, unitsOfMeasure } = response;
+  const { locations } = response;
 
   // Get measure unit from label.
-  const measureMatch = unitsOfMeasure.match(/^esri(\w+)$/);
-  const measureUnit = measureMatch ? measureMatch[1] : "(unknown unit)";
 
   // Initialize an array for output locations that have no geometry.
-  const unlocateable = new Array<IG2MOutputLocation>();
+  const unlocatable = new Array<IG2MOutputLocation>();
 
   // Loop through all of the locations...
   for (const l of locations) {
@@ -203,7 +196,7 @@ theMap.on("click", async event => {
       if (!hasGeometry && r.geometry) {
         hasGeometry = true;
       }
-      const { x, y, z, m } = r.geometry;
+      const { x, y, z } = r.geometry;
       const feature = {
         type: "Feature",
         properties: {
@@ -218,16 +211,16 @@ theMap.on("click", async event => {
       geoJsonLayer.addData(feature as GeoJsonObject);
     }
     // If none of the location's results had geometry,
-    // add that location to the array of unlocateably
+    // add that location to the array of unlocatable
     // results.
     if (!hasGeometry) {
-      unlocateable.push(l);
+      unlocatable.push(l);
     }
   }
 
   // If some inputs could not be located, create an error popup
   // and open it at the clicked location.
-  if (unlocateable && unlocateable.length > 0) {
+  if (unlocatable && unlocatable.length > 0) {
     const p = document.createElement("p");
     p.classList.add("github-link");
     p.textContent = "Could not find route location near this location.";
@@ -237,7 +230,7 @@ theMap.on("click", async event => {
 
     // For each error element, create an <li> and append to
     // document fragment.
-    unlocateable
+    unlocatable
       .map(l => l.status)
       .map(s => {
         const li = document.createElement("li");
@@ -268,6 +261,4 @@ try {
   }).addTo(theMap);
 }
 
-const geoJsonExport = new GeoJsonExport({
-  layer: geoJsonLayer
-}).addTo(theMap);
+

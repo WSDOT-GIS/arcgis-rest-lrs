@@ -50,7 +50,7 @@ export default class RouteInput extends Collabsible {
     function createMeasureControl(
       id: string,
       name: string,
-      required: boolean = false
+      required = false
     ) {
       const mId = generateId(id);
       const mControl = document.createElement("input");

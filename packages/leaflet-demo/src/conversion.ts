@@ -9,8 +9,8 @@ import countyLookup from "./CountyLookup";
  */
 export function generateId(baseId: string) {
   let id: string = baseId;
-  let ok: boolean = false;
-  let i: number = 1;
+  let ok = false;
+  let i = 1;
   while (!ok) {
     const element = document.getElementById(id);
     if (!element) {

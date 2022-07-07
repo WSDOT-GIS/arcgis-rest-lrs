@@ -7,7 +7,7 @@ import {
 
 import { SpatialReferenceWkid, Point, Polyline } from "arcgis-rest-api";
 
-const guidRe = /[a-f\d\-]+/i;
+const guidRe = /[a-f\d-]+/i;
 
 describe("lrs", () => {
   // afterEach(fetchMock.restore);
@@ -35,49 +35,53 @@ describe("lrs", () => {
         expect(lrs.id).toMatch(guidRe);
         expect(lrs.name).toBeTruthy();
         expect(lrs.description).toBeDefined();
-        for (const v of lrs.versions!) {
-          expect(v.name).toBeTruthy();
-          expect(v.description).toBeDefined();
-          expect(v.access).toMatch(/^esriVersionAccess\w+$/);
-          expect(v.parentVersion).toBeDefined();
+        if (lrs.versions) {
+          for (const v of lrs.versions) {
+            expect(v.name).toBeTruthy();
+            expect(v.description).toBeDefined();
+            expect(v.access).toMatch(/^esriVersionAccess\w+$/);
+            expect(v.parentVersion).toBeDefined();
+          }
         }
       }
 
-      const fieldNameRe = /^[\w\.\(\)]+$/;
-      // Check Redline Infos for expected properties.
-      for (const rli of svcInfo.redlineInfos!) {
-        expect(rli.featureClassName).toMatch(/\w+\.\w+\.\w+/);
-        expect(typeof rli.isDataVersioned).toMatch("boolean");
-        expect(rli.versionName).toBeDefined();
-        expect(rli.dateFormat).toMatch(/^esriLRSDateFormat\w+$/);
-        expect(rli.routeIdFieldName).toMatch(fieldNameRe);
-        expect(rli.routeNameFieldName).toMatch(fieldNameRe);
-        expect(rli.fromMeasureFieldName).toMatch(fieldNameRe);
-        expect(rli.toMeasureFieldName).toMatch(fieldNameRe);
-        expect(rli.effectiveDateFieldName).toMatch(fieldNameRe);
-        expect(rli.activityTypeFieldName).toMatch(fieldNameRe);
-        expect(rli.networkFieldName).toMatch(fieldNameRe);
-        expect(rli.lrs.id).toMatch(guidRe);
-        expect(rli.lrs.name).toBeTruthy();
+      const fieldNameRe = /^[\w.()]+$/;
+      if (svcInfo.redlineInfos) {
+        // Check Redline Infos for expected properties.
+        for (const rli of svcInfo.redlineInfos) {
+          expect(rli.featureClassName).toMatch(/\w+\.\w+\.\w+/);
+          expect(typeof rli.isDataVersioned).toMatch("boolean");
+          expect(rli.versionName).toBeDefined();
+          expect(rli.dateFormat).toMatch(/^esriLRSDateFormat\w+$/);
+          expect(rli.routeIdFieldName).toMatch(fieldNameRe);
+          expect(rli.routeNameFieldName).toMatch(fieldNameRe);
+          expect(rli.fromMeasureFieldName).toMatch(fieldNameRe);
+          expect(rli.toMeasureFieldName).toMatch(fieldNameRe);
+          expect(rli.effectiveDateFieldName).toMatch(fieldNameRe);
+          expect(rli.activityTypeFieldName).toMatch(fieldNameRe);
+          expect(rli.networkFieldName).toMatch(fieldNameRe);
+          expect(rli.lrs.id).toMatch(guidRe);
+          expect(rli.lrs.name).toBeTruthy();
 
-        for (const field of rli.fields) {
-          expect(field.name).toMatch(fieldNameRe);
-          expect(field.type).toMatch(/^esriFieldType\w+$/);
-          expect(field.alias).toBeDefined();
-          expect(typeof field.editable).toMatch("boolean");
-          expect(typeof field.nullable).toMatch("boolean");
-          if (field.type !== "esriFieldTypeGeometry") {
-            expect(field.defaultValue).toBeDefined(
-              `Expected field.defaultValue to be defined.\n${JSON.stringify(
-                field
-              )}`
-            );
-          }
-          expect(field.domain).toBeDefined();
-          if (field.domain) {
-            expect(field.domain.type).toBeTruthy();
-            expect(field.domain.name).toBeTruthy();
-            expect(field.domain.codedValues.length).toBeGreaterThan(0);
+          for (const field of rli.fields) {
+            expect(field.name).toMatch(fieldNameRe);
+            expect(field.type).toMatch(/^esriFieldType\w+$/);
+            expect(field.alias).toBeDefined();
+            expect(typeof field.editable).toMatch("boolean");
+            expect(typeof field.nullable).toMatch("boolean");
+            if (field.type !== "esriFieldTypeGeometry") {
+              expect(field.defaultValue).toBeDefined(
+                `Expected field.defaultValue to be defined.\n${JSON.stringify(
+                  field
+                )}`
+              );
+            }
+            expect(field.domain).toBeDefined();
+            if (field.domain) {
+              expect(field.domain.type).toBeTruthy();
+              expect(field.domain.name).toBeTruthy();
+              expect(field.domain.codedValues.length).toBeGreaterThan(0);
+            }
           }
         }
       }
@@ -89,7 +93,6 @@ describe("lrs", () => {
       const inSR = 4326;
       const tolerance = 50;
       const routeId = "5303151600i";
-      const measure = 1.4010354979252355;
       const temporalViewDate = new Date(2018, 2, 6);
       it("should be able perform geometry to measure", async () => {
         // fetchMock.once("*", wsdotResponses.g2mResponse);
@@ -145,16 +148,14 @@ describe("lrs", () => {
             /^esriGeometry(Point|Polyline)$/,
             "Expected geometry type to be either Point or Polyline"
           );
-          switch (location.geometryType) {
-            case "esriGeometryPoint":
-              const p = location.geometry as Point;
-              expect(p.x).toBeDefined();
-              expect(p.y).toBeDefined();
-              break;
-            case "esriGeometryPolyline":
-              const pl = location.geometry as Polyline;
-              expect(Array.isArray(pl.paths)).toEqual(true);
-              break;
+          if (location.geometryType === "esriGeometryPoint") {
+            const p = location.geometry as Point;
+            expect(p.x).toBeDefined();
+            expect(p.y).toBeDefined();
+          } else if (location.geometryType === "esriGeometryPolyline") {
+            const pl = location.geometry as Polyline;
+            expect(Array.isArray(pl.paths)).toEqual(true);
+            break;
           }
         }
       });
