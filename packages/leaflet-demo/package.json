@@ -4,7 +4,7 @@
   "description": "Demo application using ArcGIS REST LRS client",
   "main": "index.js",
   "scripts": {
-    "disableprepare": "npm run build",
+    "prepare": "npm run build",
     "build": "npm run build:css && npm run build:site",
     "build:css": "lessc style/index.less style/index.css",
     "build:site": "webpack",
@@ -12,8 +12,8 @@
     "build:utils": "tsc -p util",
     "copy:leaflet": "node util/copyLeaflet.js",
     "prettier": "prettier \"{src,util,style}/**/*.{ts,less}\" --write",
-    "gh-pages": "npm run build && node util/publish.js",
-    "serve": "dotnet serve"
+    "serve": "dotnet serve",
+    "gh-pages": "npm run build && node util/publish.js"
   },
   "keywords": [
     "lrs",

@@ -18,6 +18,8 @@
     "prepare": "webpack && tsc --rootDir src --outDir ./dist/esm --module es2015",
     "build:webpack": "webpack",
     "build:esm": "tsc --rootDir src --outDir ./dist/esm --module es2015",
+    "watch:tsc": "tsc -w",
+    "watch:wp": "webpack -w",
     "precommit": "prettier --write **/*.ts",
     "test": "jasmine"
   },
