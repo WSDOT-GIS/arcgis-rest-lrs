@@ -7,32 +7,32 @@ export const LrsInfo: ILrsServiceInfo = {
     {
       id: 2,
       name: "Mile Marker",
-      type: "esriLRSNetworkLayer"
+      type: "esriLRSNetworkLayer",
     },
     {
       id: 3,
       name: "Named Route",
-      type: "esriLRSNetworkLayer"
-    }
+      type: "esriLRSNetworkLayer",
+    },
   ],
   eventLayers: [
     {
       id: 0,
       name: "Marker Events",
-      type: "esriLRSPointEventLayer"
+      type: "esriLRSPointEventLayer",
     },
     {
       id: 1,
       name: "Functional Class",
-      type: "esriLRSLinearEventLayer"
-    }
+      type: "esriLRSLinearEventLayer",
+    },
   ],
   redlineLayers: [
     {
       id: 4,
       name: "Redline",
-      type: "esriLRSRedlineLayer"
-    }
+      type: "esriLRSRedlineLayer",
+    },
   ],
   centerlineLayers: [],
   calibrationPointLayers: [],
@@ -48,17 +48,17 @@ export const LrsInfo: ILrsServiceInfo = {
           name: "dbo.DEFAULT",
           description: "Instance default version.",
           access: "esriVersionAccessPublic",
-          parentVersion: null
-        }
-      ]
-    }
-  ]
+          parentVersion: null,
+        },
+      ],
+    },
+  ],
 };
 
 export const G2MResponse = {
   unitsOfMeasure: "esriMiles",
   spatialReference: {
-    wkid: 4326
+    wkid: 4326,
   },
   locations: [
     {
@@ -71,17 +71,17 @@ export const G2MResponse = {
           geometry: {
             x: -74.087713747166845,
             y: 40.607818417592,
-            z: 0
-          }
-        }
-      ]
-    }
-  ]
+            z: 0,
+          },
+        },
+      ],
+    },
+  ],
 };
 
 export const M2GResponse = {
   spatialReference: {
-    wkid: 4326
+    wkid: 4326,
   },
   locations: [
     {
@@ -92,8 +92,8 @@ export const M2GResponse = {
         x: -74.087713747166845,
         y: 40.607818417592,
         z: 0,
-        m: 6.5318821878293001
-      }
+        m: 6.5318821878293001,
+      },
     },
     {
       status: "esriLocatingOK",
@@ -105,10 +105,8 @@ export const M2GResponse = {
         paths: [
           [
             [
-              -74.197001471759521,
-              40.635667264621702,
-              0,
-              1.0587911840678754e-22
+              -74.197001471759521, 40.635667264621702, 0,
+              1.0587911840678754e-22,
             ],
             [-74.196425494913399, 40.635458224921429, 0, 0.033700655374559574],
             [-74.195879500369017, 40.635164254819649, 0, 0.069017334913951345],
@@ -290,10 +288,10 @@ export const M2GResponse = {
             [-74.097904506120045, 40.610510210862735, 0, 5.9500072729861131],
             [-74.097682507826732, 40.610519196973257, 0, 5.9617548311071005],
             [-74.097438457710467, 40.610524226680866, 0, 5.9746558382757939],
-            [-74.096959143927975, 40.610537149896899, 0, 6]
-          ]
-        ]
-      }
-    }
-  ]
+            [-74.096959143927975, 40.610537149896899, 0, 6],
+          ],
+        ],
+      },
+    },
+  ],
 };

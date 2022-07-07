@@ -7,7 +7,7 @@ import {
   MeasureUnits,
   esriLocatingStatusG2M,
   dateToTimeInstant,
-  esriLocatingStatusM2G
+  esriLocatingStatusM2G,
 } from "./common";
 import { INetworkLayer } from "./layers";
 import UrlFormatError from "./UrlFormatError";
@@ -120,13 +120,13 @@ async function makeValidatedRequest(
 ) {
   let { endpoint } = requestOptions;
   endpoint = validateUrl(endpoint, re);
-  delete requestOptions.endpoint;
+  delete (requestOptions as any).endpoint;
   return request(endpoint, requestOptions);
 }
 
 /**
  * Gets information about an LRS service
- * @param requestOptions LRS service URL. E.g., https://example.com/MyService/MapServer/exts/LRSServer
+ * @param requestOptions LRS service URL. E.g., https://example.com/MyService/MapServer/exts/LRServer
  * @see {@link http://roadsandhighwayssample.esri.com/roads/api/lrsserver.html|Linear Referencing Service}
  */
 export async function getLrsServiceInfo(
@@ -206,12 +206,12 @@ export interface IM2GLocation {
   routeId: string;
 }
 
-/** Point location returned by measureToGeoemtry */
+/** Point location returned by measureToGeometry */
 export interface IM2GPointLocation extends IM2GLocation {
   measure: number;
 }
 
-/** Polyline location returned by measureToGeoemtry */
+/** Polyline location returned by measureToGeometry */
 export interface IM2GLineLocation extends IM2GLocation {
   toRouteId?: string;
   fromMeasure: number;
@@ -261,8 +261,8 @@ function coordsToLocation(location: IG2MInputLocation | number[]) {
     return {
       geometry: {
         x: location[0],
-        y: location[1]
-      }
+        y: location[1],
+      },
     };
   }
   return location;
@@ -285,7 +285,7 @@ export class LrsClient {
    * Creates a new instance of the client class.
    * @param url The URL of the LRS service.
    * @example
-   * http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer/exts/LRSServer
+   * http://roadsandhighwayssample.esri.com/arcgis/rest/services/RoadsHighways/NewYork/MapServer/exts/LRServer
    */
   constructor(url: string) {
     this._url = validateUrl(url, urlRe.lrsServer);
@@ -313,7 +313,7 @@ export class LrsClient {
     const requestUrl = `${this.url}/networkLayers/${layerId}/geometryToMeasure`;
 
     const params: any = {
-      locations: locations.map(coordsToLocation)
+      locations: locations.map(coordsToLocation),
     };
 
     if (tolerance !== undefined) {
@@ -354,7 +354,7 @@ export class LrsClient {
 
     const params: any = {
       layerId,
-      locations
+      locations,
     };
 
     if (temporalViewDate) {

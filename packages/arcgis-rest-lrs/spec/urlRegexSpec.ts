@@ -47,7 +47,7 @@ urls.locksAcquire = `${urls.locks}/acquire`;
 urls.locksRelease = `${urls.locks}/release`;
 
 describe("urlRe", () => {
-  it("regular expressions should match corresponding URLs but not others.", done => {
+  it("regular expressions should match corresponding URLs but not others.", (done) => {
     for (const name in urlRe) {
       if (urlRe.hasOwnProperty(name)) {
         if (!urls.hasOwnProperty(name)) {

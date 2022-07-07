@@ -3,7 +3,7 @@ import {
   SqlDateFormat,
   ISpatialReferenceInfo,
   MeasureUnits,
-  ILayerInfo
+  ILayerInfo,
 } from "./common";
 import { ILrsInfo } from "./lrs";
 

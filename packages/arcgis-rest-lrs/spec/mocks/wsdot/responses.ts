@@ -5,8 +5,8 @@ export const lrsServiceInfo = {
     {
       id: 0,
       name: "CRAB_Routes",
-      type: "esriLRSNetworkLayer"
-    }
+      type: "esriLRSNetworkLayer",
+    },
   ],
   eventLayers: [],
   redlineLayers: [],
@@ -24,10 +24,10 @@ export const lrsServiceInfo = {
           name: "dbo.DEFAULT",
           description: "Instance default version.",
           access: "esriVersionAccessPublic",
-          parentVersion: null
-        }
-      ]
-    }
+          parentVersion: null,
+        },
+      ],
+    },
   ],
   redlineInfos: [
     {
@@ -44,7 +44,7 @@ export const lrsServiceInfo = {
       networkFieldName: "NetworkId",
       lrs: {
         id: "ffafdc1a-d613-4c79-bb0b-f3b4b6dd5bba",
-        name: "WALRS"
+        name: "WALRS",
       },
       fields: [
         {
@@ -54,7 +54,7 @@ export const lrsServiceInfo = {
           editable: false,
           nullable: false,
           defaultValue: null,
-          domain: null
+          domain: null,
         },
         {
           name: "FromMeasure",
@@ -63,7 +63,7 @@ export const lrsServiceInfo = {
           editable: true,
           nullable: true,
           defaultValue: null,
-          domain: null
+          domain: null,
         },
         {
           name: "ToMeasure",
@@ -72,7 +72,7 @@ export const lrsServiceInfo = {
           editable: true,
           nullable: true,
           defaultValue: null,
-          domain: null
+          domain: null,
         },
         {
           name: "RouteId",
@@ -82,7 +82,7 @@ export const lrsServiceInfo = {
           editable: true,
           nullable: true,
           defaultValue: null,
-          domain: null
+          domain: null,
         },
         {
           name: "RouteName",
@@ -92,7 +92,7 @@ export const lrsServiceInfo = {
           editable: true,
           nullable: true,
           defaultValue: null,
-          domain: null
+          domain: null,
         },
         {
           name: "EffectiveDate",
@@ -102,7 +102,7 @@ export const lrsServiceInfo = {
           editable: true,
           nullable: true,
           defaultValue: null,
-          domain: null
+          domain: null,
         },
         {
           name: "ActivityType",
@@ -117,34 +117,34 @@ export const lrsServiceInfo = {
             codedValues: [
               {
                 name: "Create Route",
-                code: 1
+                code: 1,
               },
               {
                 name: "Calibrate Route",
-                code: 2
+                code: 2,
               },
               {
                 name: "Reverse Route",
-                code: 3
+                code: 3,
               },
               {
                 name: "Retire Route",
-                code: 4
+                code: 4,
               },
               {
                 name: "Extend Route",
-                code: 5
+                code: 5,
               },
               {
                 name: "Reassign Route",
-                code: 6
+                code: 6,
               },
               {
                 name: "Realign Route",
-                code: 7
-              }
-            ]
-          }
+                code: 7,
+              },
+            ],
+          },
         },
         {
           name: "NetworkId",
@@ -159,30 +159,30 @@ export const lrsServiceInfo = {
             codedValues: [
               {
                 name: "SR_24K_LRS",
-                code: 1
+                code: 1,
               },
               {
                 name: "LAPR",
-                code: 2
+                code: 2,
               },
               {
                 name: "CRAB",
-                code: 3
+                code: 3,
               },
               {
                 name: "SR_24K_GeoLength",
-                code: 4
+                code: 4,
               },
               {
                 name: "SR_24K_LRS_SRMP",
-                code: 5
+                code: 5,
               },
               {
                 name: "SR_24k_LRS_HPMS",
-                code: 6
-              }
-            ]
-          }
+                code: 6,
+              },
+            ],
+          },
         },
         {
           name: "SHAPE",
@@ -190,7 +190,7 @@ export const lrsServiceInfo = {
           alias: "SHAPE",
           editable: true,
           nullable: true,
-          domain: null
+          domain: null,
         },
         {
           name: "SHAPE.STLength()",
@@ -199,11 +199,11 @@ export const lrsServiceInfo = {
           editable: false,
           nullable: false,
           defaultValue: null,
-          domain: null
-        }
-      ]
-    }
-  ]
+          domain: null,
+        },
+      ],
+    },
+  ],
 };
 
 export const networkLayer = {
@@ -226,7 +226,7 @@ export const networkLayer = {
     xyResolution: 0.00032808333333333328,
     xyTolerance: 0.003280833333333,
     mResolution: 6.2136994949494937e-8,
-    mTolerance: 6.2136994949488645e-7
+    mTolerance: 6.2136994949488645e-7,
   },
   routeIdFields: ["RouteId"],
   routeIdSeparator: "",
@@ -239,7 +239,7 @@ export const networkLayer = {
   supportsLines: false,
   lrs: {
     id: "ffafdc1a-d613-4c79-bb0b-f3b4b6dd5bba",
-    name: "WALRS"
+    name: "WALRS",
   },
   eventLayers: [],
   intersectionLayers: [],
@@ -251,7 +251,7 @@ export const networkLayer = {
       editable: false,
       nullable: false,
       defaultValue: null,
-      domain: null
+      domain: null,
     },
     {
       name: "FromDate",
@@ -261,7 +261,7 @@ export const networkLayer = {
       editable: true,
       nullable: true,
       defaultValue: null,
-      domain: null
+      domain: null,
     },
     {
       name: "ToDate",
@@ -271,7 +271,7 @@ export const networkLayer = {
       editable: true,
       nullable: true,
       defaultValue: null,
-      domain: null
+      domain: null,
     },
     {
       name: "RouteId",
@@ -281,7 +281,7 @@ export const networkLayer = {
       editable: true,
       nullable: true,
       defaultValue: null,
-      domain: null
+      domain: null,
     },
     {
       name: "SHAPE",
@@ -289,7 +289,7 @@ export const networkLayer = {
       alias: "SHAPE",
       editable: true,
       nullable: true,
-      domain: null
+      domain: null,
     },
     {
       name: "SHAPE.STLength()",
@@ -298,15 +298,15 @@ export const networkLayer = {
       editable: false,
       nullable: false,
       defaultValue: null,
-      domain: null
-    }
-  ]
+      domain: null,
+    },
+  ],
 };
 
 export const g2mResponse = {
   unitsOfMeasure: "esriMiles",
   spatialReference: {
-    wkid: 4326
+    wkid: 4326,
   },
   locations: [
     {
@@ -319,17 +319,17 @@ export const g2mResponse = {
           geometry: {
             x: -122.76985415453336,
             y: 47.954735348147381,
-            z: 0
-          }
-        }
-      ]
-    }
-  ]
+            z: 0,
+          },
+        },
+      ],
+    },
+  ],
 };
 
 export const m2gResponse = {
   spatialReference: {
-    wkid: 2927
+    wkid: 2927,
   },
   locations: [
     {
@@ -346,10 +346,10 @@ export const m2gResponse = {
             [1078578.3349422216, 964361.12618397176, 0, 0.33973200430045836],
             [1079115.6491563022, 964340.79190705717, 0, 0.44147623830940574],
             [1080660.1260542274, 964266.83667439222, 0, 0.73405965008714702],
-            [1082065.251486497, 964236.94660814723, 0, 1]
-          ]
-        ]
-      }
-    }
-  ]
+            [1082065.251486497, 964236.94660814723, 0, 1],
+          ],
+        ],
+      },
+    },
+  ],
 };
