@@ -23,7 +23,6 @@ import {
 import GeoJsonExport from "./GeoJsonExport";
 import GitHubLink from "./GitHubLink";
 
-// tslint:disable-next-line:no-var-requires
 const esriLeaflet = require("esri-leaflet");
 
 import { Point, Polyline } from "arcgis-rest-api";

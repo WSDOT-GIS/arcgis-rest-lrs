@@ -272,7 +272,6 @@ function coordsToLocation(location: IG2MInputLocation | number[]) {
  * Client for LRS Services.
  */
 export class LrsClient {
-  // tslint:disable-next-line:variable-name
   private _url: string;
   /**
    * Gets the "url" property.
