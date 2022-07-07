@@ -3,7 +3,7 @@ Demo: @wsdot/arcgis-rest-lrs
 
 Interactive map application that demonstrates abilities of the [@wsdot/arcgis-rest-lrs] library.
 
-The application is hosted at https://wsdot-gis.github.io/arcgis-rest-lrs-demo/.
+The application is hosted at <https://wsdot-gis.github.io/arcgis-rest-lrs/>.
 
 Build instructions
 ------------------
@@ -16,7 +16,7 @@ Build instructions
 Publish to GitHub Pages
 -----------------------
 
-The following command will update the site at https://wsdot-gis.github.io/arcgis-rest-lrs-demo/.
+The following command will update the site at <https://wsdot-gis.github.io/arcgis-rest-lrs/>.
 
 ```shell
 npm run publish

@@ -265,7 +265,7 @@ try {
   new GitHubLink({
     position,
     userOrOrg: "wsdot-gis",
-    repository: "arcgis-rest-lrs-demo"
+    repository: "arcgis-rest-lrs"
   }).addTo(theMap);
 }
 
