@@ -1,6 +1,5 @@
 {
-	"scripts": {
-	},
+	"scripts": {},
 	"private": true,
 	"workspaces": [
 		"packages/*"

@@ -41,9 +41,7 @@
   "devDependencies": {
     "@esri/arcgis-rest-request": "^4.0.3",
     "@types/arcgis-rest-api": "^10.4.5",
-    "@types/fetch-mock": "^7.3.5",
     "@types/jasmine": "^4.0.3",
-    "fetch-mock": "^9.11.0",
     "jasmine": "^4.2.1",
     "prettier": "^2.7.1",
     "source-map": "^0.7.4",
