@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "dotnet-serve leaflet-demo",
+			"detail": "Serves the Leaflet demo using dotnet-serve",
+			"type": "npm",
+			"script": "serve",
+			"icon": {
+				"id": "browser",
+				"color": "terminal.ansiGreen"
+			},
+			"path": "packages/leaflet-demo",
+			"problemMatcher": [],
+		}
+	]
+}

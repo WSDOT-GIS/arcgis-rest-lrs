@@ -11,7 +11,7 @@ import {
 } from "leaflet";
 import { crabRouteIdRe } from "./CrabRouteId";
 import { generateId } from "./conversion";
-import Collabsible from "./Collapsible";
+import Collapsible from "./Collapsible";
 
 function handleEvent(e: Event) {
   DomEvent.stop(e);
@@ -27,7 +27,7 @@ export interface IRouteSubmitData {
 /**
  * Route input controls
  */
-export default class RouteInput extends Collabsible {
+export default class RouteInput extends Collapsible {
   public readonly form: HTMLFormElement;
 
   /**
