@@ -11,7 +11,19 @@
 				"color": "terminal.ansiGreen"
 			},
 			"path": "packages/leaflet-demo",
-			"problemMatcher": [],
+			"problemMatcher": []
+		},
+		{
+			"label": "Publish to gh-pages",
+			"detail": "Build the demo website project and publish to Github Pages",
+			"type": "npm",
+			"script": "gh-pages",
+			"path": "packages/leaflet-demo",
+			"icon": {
+				"id": "github",
+				"color": "terminal.ansiRed"
+			},
+			"problemMatcher": []
 		}
 	]
 }
