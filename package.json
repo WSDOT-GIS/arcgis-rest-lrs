@@ -1,5 +1,7 @@
 {
-	"scripts": {},
+	"scripts": {
+		"build": "npm run -w @wsdot/arcgis-rest-lrs prepare && npm run -w leaflet-demo build"
+	},
 	"private": true,
 	"workspaces": [
 		"packages/*"

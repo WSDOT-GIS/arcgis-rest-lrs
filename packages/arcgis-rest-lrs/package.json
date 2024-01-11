@@ -33,27 +33,28 @@
   "author": "Jeff Jacobson",
   "license": "Unlicense",
   "dependencies": {
-    "tslib": "^2.4.0"
+    "tslib": "^2.6.2"
   },
   "peerDependencies": {
     "@esri/arcgis-rest-request": "^4.0.3"
   },
   "devDependencies": {
-    "@esri/arcgis-rest-request": "^4.0.3",
-    "@types/arcgis-rest-api": "^10.4.5",
-    "@types/jasmine": "^4.0.3",
-    "jasmine": "^4.2.1",
-    "prettier": "^2.7.1",
+    "@esri/arcgis-rest-request": "^4.2.0",
+    "@types/arcgis-rest-api": "^10.4.8",
+    "@types/jasmine": "^5.1.4",
+    "jasmine": "^5.1.0",
+    "prettier": "^3.1.1",
     "source-map": "^0.7.4",
-    "ts-loader": "^9.3.1",
-    "ts-node": "^10.8.2",
-    "typescript": "^4.7.4",
-    "webpack": "^5.73.0",
-    "webpack-cli": "^4.10.0"
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WSDOT-GIS/arcgis-rest-lrs.git"
+    "url": "git+https://github.com/WSDOT-GIS/arcgis-rest-lrs.git",
+    "directory": "packages/arcgis-rest-lrs"
   },
   "bugs": {
     "url": "https://github.com/WSDOT-GIS/arcgis-rest-lrs/issues"

@@ -2,16 +2,10 @@
  * This module defines the class that manages the route input controls
  */
 
-import {
-  Control,
-  ControlOptions,
-  DomEvent,
-  LeafletMouseEvent,
-  Map as LeafletMap
-} from "leaflet";
-import { crabRouteIdRe } from "./CrabRouteId";
-import { generateId } from "./conversion";
+import { ControlOptions, DomEvent, Map as LeafletMap } from "leaflet";
 import Collabsible from "./Collapsible";
+import { generateId } from "./conversion";
+import { crabRouteIdRe } from "./CrabRouteId";
 
 function handleEvent(e: Event) {
   DomEvent.stop(e);
@@ -89,7 +83,7 @@ export default class RouteInput extends Collabsible {
       [routeIdControl, "Route ID"],
       [fromMControl, "Measure"],
       [toMControl, "To Measure"]
-    ).forEach(c => {
+    ).forEach((c) => {
       const control = c[0];
       const labelText = c[1];
 
@@ -102,9 +96,9 @@ export default class RouteInput extends Collabsible {
 
     toMControl.title = "Leave empty when locating points.";
 
-    const [submitButton, clearButton] = ["Submit", "Reset"].map(text => {
+    const [submitButton, clearButton] = ["Submit", "Reset"].map((text) => {
       const btn = document.createElement("button");
-      btn.type = text.toLowerCase();
+      btn.type = text.toLowerCase() as "submit" | "reset";
       btn.textContent = text;
       this.form.appendChild(btn);
       return btn;
@@ -114,9 +108,9 @@ export default class RouteInput extends Collabsible {
 
     // DomEvent.on(this.outerDiv, "click", handleEvent);
 
-    this.form.addEventListener("submit", ev => {
+    this.form.addEventListener("submit", (ev) => {
       const detail: any = {
-        routeId: routeIdControl.value
+        routeId: routeIdControl.value,
       };
       if (!toMControl.value) {
         detail.measure = fromMControl.valueAsNumber;
@@ -125,18 +119,20 @@ export default class RouteInput extends Collabsible {
         detail.toMeasure = toMControl.valueAsNumber;
       }
       const customEvent = new CustomEvent<IRouteSubmitData>("route-m-select", {
-        detail
+        detail,
       });
       this.form.dispatchEvent(customEvent);
       ev.preventDefault();
     });
 
     // Stop the click events from applying to the map.
-    Array.from(this.form.querySelectorAll("input,label,button")).forEach(c => {
-      ["click", "dblclick"].forEach(evtName => {
-        c.addEventListener(evtName, this._stopProp);
-      });
-    });
+    Array.from(this.form.querySelectorAll("input,label,button")).forEach(
+      (c) => {
+        ["click", "dblclick"].forEach((evtName) => {
+          c.addEventListener(evtName, this._stopProp);
+        });
+      }
+    );
 
     return this.rootElement;
   }
@@ -145,11 +141,13 @@ export default class RouteInput extends Collabsible {
    */
   public onRemove(map: LeafletMap) {
     // DomEvent.off(this.outerDiv, "click", handleEvent);
-    Array.from(this.form.querySelectorAll("input,label,button")).forEach(c => {
-      ["click", "dblclick"].forEach(evtName => {
-        c.removeEventListener(evtName, this._stopProp);
-      });
-    });
+    Array.from(this.form.querySelectorAll("input,label,button")).forEach(
+      (c) => {
+        ["click", "dblclick"].forEach((evtName) => {
+          c.removeEventListener(evtName, this._stopProp);
+        });
+      }
+    );
   }
 
   /** Stops propagation of further events. */
